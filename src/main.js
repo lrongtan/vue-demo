@@ -4,7 +4,7 @@ import router from './router'
 import store from './store'
 import 'amfe-flexible'                //屏幕适配
 import plugin from './plugins'
-import { Toast } from "vant";         //Toast 全局使用组件
+import { Toast } from "vant"         //Toast 全局使用组件
 
 
 import './assets/styles/common/reset.css'

@@ -13,6 +13,6 @@
   color: #2c3e50;
   height: 100%;
   width: 100%;
-  background: red;
+  background: $background-color;
 }
 </style>
