@@ -6,9 +6,11 @@ import 'amfe-flexible'                //屏幕适配
 import plugin from './plugins'
 import { Toast } from "vant";         //Toast 全局使用组件
 
+
 import './assets/styles/common/reset.css'
 import './assets/styles/common/border.css'
 import './assets/styles/scss/base.scss'
+import './assets/iconfont/iconfont.css'
 
 Vue.config.productionTip = false
 

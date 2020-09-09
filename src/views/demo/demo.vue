@@ -6,13 +6,13 @@
       <div class="row-right">滚蛋</div>
     </div>
     <van-button type="primary" block @click="btnTap">主要按钮</van-button>
+    <span class="iconfont icon-listing-content"></span>
   </div>
 </template>
 
 <script>
 
 import { Button, Toast } from "vant";
-
 export default {
 
   name: "demo",
