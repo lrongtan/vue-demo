@@ -1,0 +1,59 @@
+// 纵横都居中
+@mixin flex_center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// 水平居中
+@mixin flex_h_center {
+  display: flex;
+  justify-content: center;
+}
+
+// 纵向居中
+@mixin flex_v_center() {
+  display: flex;
+  align-items: center;
+}
+
+// 水平两端
+@mixin flex_h_between() {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin flex_column() {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@mixin ellipsis_line($line) {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  // 可以没有后面这三个属性
+  word-break: keep-all;
+  white-space: normal;
+  overflow-wrap: break-word;
+}
+
+@mixin scroll {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+@mixin scroll-x {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
