@@ -12,7 +12,7 @@
 
 <script>
 
-import { Button, Toast } from "vant";
+import { Button } from "vant";
 export default {
 
   name: "demo",
@@ -45,7 +45,6 @@ export default {
   },
 };
 </script>
-
 
 <style lang="scss">
 .content {
