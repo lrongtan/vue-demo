@@ -8,14 +8,25 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'd',
+    component: () => import('@views/index/index.vue'),
+    redirect: '/index/home',
+  },
+  {
+    path: '/index',
+    name: 'index',
+    component: () => import('@views/index/index.vue'),
+    redirect: '/index/home',
+    children: [
+      {path: '/index/home', name: 'home', component: () => import('@views/index/home/home.vue')},
+      {path: '/index/mine', name: 'mine', component: () => import('@views/index/mine/mine.vue')}
+    ]
+  },
+  {
+    path: '/login',
     name: 'login',
     component: () => import('@views/login/login.vue')
-  },
-  // {
-  //   path: '/',
-  //   name: 'demo',
-  //   component: () => import('@views/demo/demo.vue')
-  // }
+  }
 ]
 
 const router = new VueRouter({
