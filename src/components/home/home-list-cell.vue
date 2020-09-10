@@ -7,7 +7,7 @@
     <div class="content-right">
       <div class="title-wrapper">
         <div class="title">{{title}}</div>
-        <div class="money">佣{{title}}元</div>
+        <div class="money">佣￥<span>{{title}}</span></div>
       </div>
       <div class="tag-wrapper">
         <div class="tag">任务类型</div>
@@ -15,7 +15,7 @@
       </div>
       <div class="amount-wrapper">
         <div class="finished">{{title}}已赚</div>
-        <div class="remaining">剩{{title}}个名额</div>
+        <div class="remaining">剩<span>{{title}}</span>个名额</div>
       </div>
     </div>
   </div>
@@ -71,7 +71,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .component-wrapper {
   @include flex_v_center;
   padding: 10px 0px;
@@ -101,8 +101,13 @@ export default {
   }
 
   .money {
-    color: red;
+    color: $theme-color;
     font-size: 15px;
+
+    span {
+      font-size: 20px;
+      font-weight: bold;
+    }
   }
 }
 
@@ -119,20 +124,26 @@ export default {
   .remaining {
     font-size: 15px;
     color: #888;
+
+    span {
+      color: red
+    }
   }
 }
 
 .tag-wrapper {
   @include flex_v_center;
-  height: 20px;
   margin: 10px 0px;
 
   .tag {
     padding: 5px 10px;
     font-size: 13px;
-    background: #ccc;
+    background: #fefefe;
+    border: 1px solid $theme-color;
+    border-radius: 3px;
     text-align: center;
     align-self: center;
+    color: $theme-color;
   }
 
   .tag-margin-left {

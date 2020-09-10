@@ -4,12 +4,12 @@
     <router-view class="content-wrapper"></router-view>
   </keep-alive>
   <div class="tabbar-wrapper" :style="tabbarStyle">
-    <van-tabbar v-model="tabbarIndex" safe-area-inset-bottom ref="tabbar">
+    <van-tabbar v-model="tabbarIndex" safe-area-inset-bottom ref="tabbar" active-color="#ffb100">
       <keep-alive>
         <van-tabbar-item icon="home-o" replace to='/index/home'>首页</van-tabbar-item>
       </keep-alive>
       <keep-alive>
-        <van-tabbar-item icon="friends-o" replace to='/index/mine'>个人中心</van-tabbar-item>
+        <van-tabbar-item icon="user-o" replace to='/index/mine'>我的</van-tabbar-item>
       </keep-alive>
     </van-tabbar>
   </div>
@@ -48,7 +48,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .content {
   width: 100%;
   height: 100%;

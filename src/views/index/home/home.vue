@@ -20,7 +20,6 @@ import {
   NavBar,
   List,
   PullRefresh,
-  Image
 } from "vant"
 import HomeListCell from '@/components/home/home-list-cell'
 
@@ -29,7 +28,6 @@ export default {
     [NavBar.name]: NavBar,
     [List.name]: List,
     [PullRefresh.name]: PullRefresh,
-    [Image.name]: Image,
     HomeListCell,
   },
   data() {
@@ -72,7 +70,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .content {
   width: 100%;
   height: 100%;
@@ -83,7 +81,6 @@ export default {
 .content-wrapper {
   flex: 1;
   @include scroll;
-  // margin-bottom: 40px;
 }
 
 .cell-wrapper {
