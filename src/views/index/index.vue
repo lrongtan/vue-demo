@@ -1,21 +1,29 @@
 <template>
-  <div class="content">
+<div class="content">
+  <keep-alive>
     <router-view class="content-wrapper"></router-view>
-    <div class="tabbar-wrapper" :style="tabbarStyle">
-      <van-tabbar v-model="tabbarIndex" safe-area-inset-bottom ref="tabbar">
+  </keep-alive>
+  <div class="tabbar-wrapper" :style="tabbarStyle">
+    <van-tabbar v-model="tabbarIndex" safe-area-inset-bottom ref="tabbar">
+      <keep-alive>
         <van-tabbar-item icon="home-o" replace to='/index/home'>首页</van-tabbar-item>
+      </keep-alive>
+      <keep-alive>
         <van-tabbar-item icon="friends-o" replace to='/index/mine'>个人中心</van-tabbar-item>
-      </van-tabbar>
-    </div>
+      </keep-alive>
+    </van-tabbar>
   </div>
+</div>
 </template>
 
 <script>
-
-import { Tabbar, TabbarItem } from "vant"
+import {
+  Tabbar,
+  TabbarItem
+} from "vant";
 
 export default {
-  components:{
+  components: {
     [Tabbar.name]: Tabbar,
     [TabbarItem.name]: TabbarItem
   },
@@ -24,29 +32,25 @@ export default {
     return {
       tabbarIndex: 0,
       tabbarStyle: {
-        height: '0px'
+        height: "0px"
       }
-    }
+    };
   },
 
   mounted() {
-    let val = this.$refs.tabbar.$el.offsetHeight     //获取组件高度
-    this.tabbarStyle.height = val + "px"
-    console.log('tabbar的高度')
-    console.log(val)
+    let val = this.$refs.tabbar.$el.offsetHeight; //获取组件高度
+    this.tabbarStyle.height = val + "px";
+    console.log("tabbar的高度");
+    console.log(val);
   },
 
-  methods: {
-    
-  },
-}
+  methods: {}
+};
 </script>
 
-
-<style lang="scss" scope>
-  .content{
-    width: 100%;
-    height: 100%;
-  }
-
+<style lang="scss">
+.content {
+  width: 100%;
+  height: 100%;
+}
 </style>
