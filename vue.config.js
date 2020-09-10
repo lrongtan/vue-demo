@@ -30,6 +30,7 @@ module.exports = {
         .set('@styles',resolve('src/assets/styles'))
         .set('@views',resolve('src/views'))
         .set('@components',resolve('src/components'))
+        .set('@utils',resolve('src/utils'))
     },
     css: {
         // 预处理
