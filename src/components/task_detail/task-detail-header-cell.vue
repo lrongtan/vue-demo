@@ -1,3 +1,4 @@
+
 <template>
 <div class="component">
   <div class="component-wrapper">
@@ -6,16 +7,18 @@
     </div>
     <div class="content-right">
       <div class="title-wrapper">
-        <div class="title">{{title}}</div>
-        <div class="money">佣￥<span>{{title}}</span></div>
+        <div class="title">任务标题</div>
+        <div class="money">佣￥<span>100</span></div>
       </div>
       <div class="tag-wrapper">
         <div class="tag">任务类型</div>
         <div class="tag tag-margin-left">平台应用</div>
+        <div class="submit-time">1小时内提交</div>
       </div>
       <div class="amount-wrapper">
-        <div class="finished">{{title}}已赚</div>
-        <div class="remaining">剩<span>{{title}}</span>个名额</div>
+        <div class="task-id">悬赏ID: xxxxxxx</div>
+        <div class="remaining"><span>10</span>/100</div>
+        <div class="check-time">24小时内审核</div>
       </div>
     </div>
   </div>
@@ -23,6 +26,7 @@
 </template>
 
 <script>
+
 import {
   Image
 } from "vant"
@@ -35,27 +39,18 @@ var img5 = require('../../assets/images/icon_类型_其他.png')
 var img6 = require('../../assets/images/icon_类型_认证绑卡.png')
 var img7 = require('../../assets/images/icon_类型_下载注册.png')
 
+
 export default {
   components: {
     [Image.name]: Image
   },
 
   props: {
-    title: {
-      type: Number,
-    },
     imageType: {
       type: Number,
       default: 1,
     }
   },
-
-  data() {
-    return {
-
-    }
-  },
-
   computed: {
     iconImageType: function () {
       switch (this.imageType) {
@@ -68,32 +63,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .component-wrapper {
   @include flex_v_center;
-  padding: 10px 0px;
+  padding: 10px;
 }
 
 .img-left {
   width: 50px;
   height: 50px;
-  margin: 10px;
+  margin: 0px 10px;
   align-self: flex-start;
 }
 
 .content-right {
   flex: 1;
   text-align: left;
-  padding-right: 15px;
   padding-left: 10px;
 }
 
 .title-wrapper {
   @include flex_v_center;
-  height: 35px;
-
   .title {
     flex: 1;
     font-size: 15px;
+    margin-right: 10px;
   }
 
   .money {
@@ -103,26 +97,6 @@ export default {
     span {
       font-size: 20px;
       font-weight: bold;
-    }
-  }
-}
-
-.amount-wrapper {
-  @include flex_v_center;
-  height: 35px;
-
-  .finished {
-    flex: 1;
-    font-size: 15px;
-    color: #aaa;
-  }
-
-  .remaining {
-    font-size: 15px;
-    color: #888;
-
-    span {
-      color: red
     }
   }
 }
@@ -145,5 +119,36 @@ export default {
   .tag-margin-left {
     margin-left: 10px;
   }
+
+  .submit-time{
+    flex: 1;
+    text-align: right;
+    font-size: 13px;
+    color: #888;
+  }
 }
+
+.amount-wrapper {
+  @include flex_v_center;
+  height: 25px;
+
+  .task-id{
+    font-size: 13px;
+    color: #888;
+  }
+  .remaining {
+    flex: 1;
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    span {
+      color: red;
+    }
+  }
+  .check-time{
+    font-size: 13px;
+    color: #888;
+  }
+}
+
 </style>

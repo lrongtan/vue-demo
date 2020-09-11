@@ -6,7 +6,7 @@
   <div class="content-wrapper">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多数据了" @load="onLoad">
-        <div class="cell-wrapper" v-for="item in m_list" :key="item">
+        <div class="cell-wrapper" v-for="item in m_list" :key="item" @click="onCellWrapperTap(item)">
           <home-list-cell :title="item"></home-list-cell>
         </div>
       </van-list>
@@ -49,6 +49,7 @@ export default {
       this.loading = true;
       this.onLoad()
     },
+    
     onLoad() {
       let _this = this
       setTimeout(function () {
@@ -65,7 +66,12 @@ export default {
         }
         _this.loading = false
       }, 2000)
-    }
+    },
+    
+    onCellWrapperTap(cellItem){
+      console.log(cellItem)
+      this.$router.push({name: 'task_detail'})
+    },
   },
 }
 </script>
