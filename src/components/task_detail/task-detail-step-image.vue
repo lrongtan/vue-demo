@@ -1,16 +1,19 @@
 <template>
-  <div class="component">
-    <div class="component-wrapper" :style="componentWrapperStyle">
-      <div class="img-item" v-for="(item, index) in imgs" :key="index" @click="imageItemTap(index)">
-        <van-image :src="item"></van-image>
-        <div class="img-tag">说明图</div>
-      </div>
+<div class="component">
+  <div class="component-wrapper" :style="componentWrapperStyle">
+    <div class="img-item" v-for="(item, index) in imgs" :key="index" @click="imageItemTap(index)">
+      <van-image :src="item"></van-image>
+      <div class="img-tag" v-if="index == 0">说明图</div>
     </div>
   </div>
+</div>
 </template>
 
 <script>
-import { Image, ImagePreview } from "vant";
+import {
+  Image,
+  ImagePreview
+} from "vant";
 
 var img1 = require("../../assets/images/icon_类型_纯关注.png");
 var img2 = require("../../assets/images/icon_类型_纯转发.png");
@@ -57,29 +60,32 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.component{
+.component {
   @include scroll-x;
   width: 285px;
 }
+
 .component-wrapper {
   height: 200px;
   display: flex;
-  background: red;
 }
 
 .img-item {
   width: 150px;
-  margin-left: 10px;
+  margin-right: 10px;
+  position: relative;
+  background: gray;
 }
 
-.img-tag{
-  position: fixed;
-  // left: 0px;
-  // top: 0px;
-  width: 60px;
-  height: 30px;
-  background: magenta;  
+.img-tag {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  font-size: 12px;
+  color: white;
+  padding: 5px 10px;
+  background: $theme-color;
+  z-index: 1000;
   // background: $theme-color;
 }
 </style>
