@@ -1,9 +1,9 @@
 <template>
 <div class="content">
   <div class="navigation-bar">
-    <van-nav-bar title="个人中心"></van-nav-bar>
+    <van-nav-bar title="个人中心" ref="navbar"></van-nav-bar>
   </div>
-  <div class="content-wrapper">
+  <div class="content-wrapper" :style="contentWrapperStyle">
     <div class="header-wrapper">
       <div class="img-left">
         <van-image src="" width="60" height="60" round></van-image>
@@ -24,7 +24,7 @@
 
     <div class="section-wrapper">
       <div class="cell-wrapper">
-        <van-cell icon="location-o" value="我的任务" is-link />
+        <van-cell icon="location-o" value="我的任务" is-link :to="{name: 'mine_task'}"/>
         <van-cell icon="service-o" value="我的客服" is-link />
       </div>
     </div>
@@ -47,6 +47,28 @@ export default {
     [Image.name]: Image,
   },
 
+  data() {
+    return {
+      contentWrapperStyle: {
+        marginTop: '0px',
+        marginBottom: '0px',
+      }
+    }
+  },
+
+  mounted() {
+    let navHeight = this.$refs.navbar.$el.offsetHeight
+    this.contentWrapperStyle.marginTop = navHeight + 'px'
+  },
+
+  methods: {
+
+
+    onMineTaskTap(){
+      this.$router.push({name: 'mine_task'})
+    },
+  },
+
 }
 </script>
 
@@ -56,6 +78,14 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.navigation-bar{
+  z-index: 1000;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
 }
 
 .content-wrapper {

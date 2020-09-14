@@ -1,9 +1,9 @@
 <template>
 <div class="content">
   <div class="navigation-bar">
-    <van-nav-bar title="首页"></van-nav-bar>
+    <van-nav-bar title="首页" ref="navbar"></van-nav-bar>
   </div>
-  <div class="content-wrapper">
+  <div class="content-wrapper" :style="contentWrapperStyle">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多数据了" @load="onLoad">
         <div class="cell-wrapper" v-for="item in m_list" :key="item" @click="onCellWrapperTap(item)">
@@ -36,7 +36,16 @@ export default {
       loading: false,
       finished: false,
       m_list: [],
+      contentWrapperStyle: {
+        marginTop: '0px',
+        marginBottom: '0px',
+      }
     }
+  },
+
+  mounted() {
+    let navHeight = this.$refs.navbar.$el.offsetHeight
+    this.contentWrapperStyle.marginTop = navHeight + 'px'
   },
 
   methods: {
@@ -82,6 +91,14 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.navigation-bar{
+  z-index: 1000;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
 }
 
 .content-wrapper {

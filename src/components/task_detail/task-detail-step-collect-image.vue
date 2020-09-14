@@ -50,7 +50,7 @@ export default {
   display: flex;
 }
 
-.img-item {
+.image-item {
   width: 100px;
   margin-right: 10px;
   position: relative;
@@ -65,7 +65,7 @@ export default {
   color: white;
   padding: 5px 10px;
   background: $theme-color;
-  z-index: 1000;
+  // z-index: 1000;
   // background: $theme-color;
 }
 
@@ -73,5 +73,7 @@ export default {
   flex: 1;
 }
 
-.van-uploader {}
+.van-uploader {
+
+}
 </style>

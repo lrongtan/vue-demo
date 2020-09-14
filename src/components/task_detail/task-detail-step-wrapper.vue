@@ -70,9 +70,10 @@ export default {
   .title{
     font-size: 15px;
     color: #999;
-    height: 52px;
+    padding: 20px 0px;
+    min-height: 22px;
     text-align: left;
-    line-height: 52px;
+    // line-height: 52px;
   }
 }
 

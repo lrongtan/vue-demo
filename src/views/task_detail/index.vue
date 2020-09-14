@@ -1,9 +1,9 @@
 <template>
 <div class="content">
   <div class="navigation-bar">
-    <van-nav-bar title="详情"></van-nav-bar>
+    <van-nav-bar title="详情" ref="navbar" left-arrow @click-left="navigationBackTap"></van-nav-bar>
   </div>
-  <div class="content-wrapper">
+  <div class="content-wrapper" :style="contentWrapperStyle">
     <div class="content-header">
       <task-detail-header-cell></task-detail-header-cell>
     </div>
@@ -38,9 +38,14 @@
         <task-detail-step-wrapper title="截图收集步骤类型" :currentIndex="4" :totalIndex="6">
           <task-detail-step-collect-image></task-detail-step-collect-image>
         </task-detail-step-wrapper>
-        <task-detail-step-wrapper title="信息收集步骤类型" :currentIndex="5" :totalIndex="6"></task-detail-step-wrapper>
+        <task-detail-step-wrapper title="信息收集步骤类型" :currentIndex="5" :totalIndex="6">
+          <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
+        </task-detail-step-wrapper>
 
       </task-detail-content-cell>
+    </div>
+    <div class="tool-bar-wrapper">
+      <task-detail-tool-bar ref="toolbar" :tool-type="1" @onDrawTap="onDrawTap"></task-detail-tool-bar>
     </div>
   </div>
 </div>
@@ -59,6 +64,8 @@ import TaskDetailStepWrapper from '@/components/task_detail/task-detail-step-wra
 import TaskDetailStepImage from '@/components/task_detail/task-detail-step-image'
 import TaskDetailStepQrcode from '@/components/task_detail/task-detail-step-qrcode'
 import TaskDetailStepCollectImage from '@/components/task_detail/task-detail-step-collect-image'
+import TaskDetailStepCollectInfo from '@/components/task_detail/task-detail-step-collect-info'
+import TaskDetailToolBar from '@/components/task_detail/task-detail-tool-bar'
 
 export default {
   components: {
@@ -72,6 +79,34 @@ export default {
     TaskDetailStepImage,
     TaskDetailStepQrcode,
     TaskDetailStepCollectImage,
+    TaskDetailStepCollectInfo,
+    TaskDetailToolBar
+  },
+
+  data() {
+    return {
+      contentWrapperStyle: {
+        marginTop: '0px',
+        marginBottom: '0px',
+      },
+      inputValue: "",
+    }
+  },
+
+  mounted() {
+    let navHeight = this.$refs.navbar.$el.offsetHeight
+    let toolHeight = this.$refs.toolbar.$el.offsetHeight
+    this.contentWrapperStyle.marginTop = navHeight + 'px'
+    this.contentWrapperStyle.marginBottom = toolHeight + 'px'
+  },
+
+  methods: {
+    onDrawTap(){
+      console.log(this.inputValue)
+    },
+    navigationBackTap(){
+      this.$router.go(-1)
+    }
   },
 };
 </script>
@@ -82,6 +117,14 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.navigation-bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 }
 
 .content-wrapper {
@@ -111,5 +154,12 @@ export default {
   background: white;
   margin: 10px;
   border-radius: 10px;
+}
+
+.tool-bar-wrapper{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 </style>
