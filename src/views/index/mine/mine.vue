@@ -25,7 +25,7 @@
     <div class="section-wrapper">
       <div class="cell-wrapper">
         <van-cell icon="location-o" value="我的任务" is-link :to="{name: 'mine_task'}"/>
-        <van-cell icon="service-o" value="我的客服" is-link />
+        <van-cell icon="service-o" value="我的客服" is-link :to="{name: 'mine_service'}"/>
       </div>
     </div>
   </div>

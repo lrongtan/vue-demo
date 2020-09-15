@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-const _import = require('./_import_' + process.env.NODE_ENV)
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -36,6 +34,11 @@ const routes = [
     path: '/mine_task',
     name: 'mine_task',
     component: () => import('@views/mine_task/index.vue'),
+  },
+  {
+    path: '/mine_service',
+    name: 'mine_service',
+    component: () => import('@views/mine_service/index.vue'),
   }
 ]
 

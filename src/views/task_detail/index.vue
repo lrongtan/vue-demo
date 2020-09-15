@@ -34,14 +34,15 @@
         <task-detail-step-wrapper title="二维码类型" :currentIndex="2" :totalIndex="6">
           <task-detail-step-qrcode></task-detail-step-qrcode>
         </task-detail-step-wrapper>
-        <task-detail-step-wrapper title="复制数据类型步骤" :currentIndex="3" :totalIndex="6"></task-detail-step-wrapper>
+        <task-detail-step-wrapper title="复制数据类型步骤" :currentIndex="3" :totalIndex="6">
+          <task-detail-step-copy-data copy-data="我是复制数据"></task-detail-step-copy-data>
+        </task-detail-step-wrapper>
         <task-detail-step-wrapper title="截图收集步骤类型" :currentIndex="4" :totalIndex="6">
           <task-detail-step-collect-image></task-detail-step-collect-image>
         </task-detail-step-wrapper>
         <task-detail-step-wrapper title="信息收集步骤类型" :currentIndex="5" :totalIndex="6">
           <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
         </task-detail-step-wrapper>
-
       </task-detail-content-cell>
     </div>
     <div class="tool-bar-wrapper">
@@ -63,6 +64,7 @@ import TaskDetailContentCell from '@/components/task_detail/task-detail-content-
 import TaskDetailStepWrapper from '@/components/task_detail/task-detail-step-wrapper'
 import TaskDetailStepImage from '@/components/task_detail/task-detail-step-image'
 import TaskDetailStepQrcode from '@/components/task_detail/task-detail-step-qrcode'
+import TaskDetailStepCopyData from '@/components/task_detail/task-detail-step-copy-data'
 import TaskDetailStepCollectImage from '@/components/task_detail/task-detail-step-collect-image'
 import TaskDetailStepCollectInfo from '@/components/task_detail/task-detail-step-collect-info'
 import TaskDetailToolBar from '@/components/task_detail/task-detail-tool-bar'
@@ -78,6 +80,7 @@ export default {
     TaskDetailStepWrapper,
     TaskDetailStepImage,
     TaskDetailStepQrcode,
+    TaskDetailStepCopyData,
     TaskDetailStepCollectImage,
     TaskDetailStepCollectInfo,
     TaskDetailToolBar
@@ -105,7 +108,7 @@ export default {
       console.log(this.inputValue)
     },
     navigationBackTap(){
-      this.$router.go(-1)
+      this.$router.back()
     }
   },
 };

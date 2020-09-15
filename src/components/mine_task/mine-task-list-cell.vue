@@ -113,14 +113,14 @@ export default {
 }
 
 .check-time-wrapper{
-  height: 30px;
-  font-size: 15px;
+  height: 25px;
+  font-size: 13px;
   color: #777;
 }
 
 .check-status-wrapper{
-  height: 30px;
-  font-size: 15px;
+  height: 25px;
+  font-size: 13px;
   color: red;
 }
 
