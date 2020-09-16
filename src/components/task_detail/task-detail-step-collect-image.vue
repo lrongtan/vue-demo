@@ -73,7 +73,5 @@ export default {
   flex: 1;
 }
 
-.van-uploader {
-
-}
+.van-uploader {}
 </style>
