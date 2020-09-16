@@ -15,10 +15,10 @@
 
     <div class="section-wrapper">
       <div class="cell-wrapper">
-        <van-cell icon="cash-on-deliver" value="提现" is-link />
-        <van-cell icon="records" value="收支明细" is-link />
-        <van-cell icon="location-o" value="绑定支付宝" is-link />
-        <van-cell icon="location-o" value="绑定微信" is-link />
+        <van-cell icon="cash-on-deliver" value="提现" is-link :to="{name: 'withdrawal'}"/>
+        <van-cell icon="records" value="收支明细" is-link :to="{name: 'balance_payment'}"/>
+        <van-cell icon="location-o" value="绑定支付宝" is-link :to="{name: 'bind_alipay'}"/>
+        <van-cell icon="location-o" value="绑定微信" is-link :to="{name: 'bind_wechat'}"/>
       </div>
     </div>
 

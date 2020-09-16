@@ -39,6 +39,26 @@ const routes = [
     path: '/mine_service',
     name: 'mine_service',
     component: () => import('@views/mine_service/index.vue'),
+  },
+  {
+    path: '/balance_payment',
+    name: 'balance_payment',
+    component: () => import('@views/balance_payment/index.vue'),
+  },
+  {
+    path: '/bind_alipay',
+    name: 'bind_alipay',
+    component: () => import('@views/bind_alipay/index.vue'),
+  },
+  {
+    path: '/bind_wechat',
+    name: 'bind_wechat',
+    component: () => import('@views/bind_wechat/index.vue'),
+  },
+  {
+    path: '/withdrawal',
+    name: 'withdrawal',
+    component: () => import('@views/withdrawal/index.vue'),
   }
 ]
 

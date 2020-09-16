@@ -1,0 +1,99 @@
+
+<template>
+  <div class="content">
+    <div class="navigation-bar">
+      <van-nav-bar title="绑定支付宝" ref="navbar" left-arrow @click-left="navigationBackTap"></van-nav-bar>
+    </div>
+    <div class="content-wrapper" :style="contentWrapperStyle">
+      <div class="field-wrapper">
+        <van-field v-model="accountInput" label="支付宝账号" placeholder="请输入支付宝账号"></van-field>
+      </div>
+      <div class="field-wrapper">
+        <van-field v-model="usernameInput" label="真实姓名" placeholder="请输入真实姓名"></van-field>
+      </div>
+    </div>
+    <div class="tool-bar" >
+      <van-button ref="toolbar" type="primary" block>提交</van-button>
+    </div>
+  </div>
+</template>
+
+
+<script>
+import { NavBar, Button, Field } from "vant";
+
+export default {
+
+  components: {
+    [NavBar.name]: NavBar,
+    [Button.name]: Button,
+    [Field.name]: Field,
+  },
+
+  data() {
+    return {
+      contentWrapperStyle: {
+        marginTop: "0px",
+        marginBottom: "0px",
+      },
+
+      accountInput: "",
+      usernameInput: "",
+    }
+  },
+
+  mounted() {
+    let navHeight = this.$refs.navbar.$el.offsetHeight
+    // let toolHeight = this.$refs.toolbar.$el.offsetHeight
+    // let toolHeight = this.$refs.toolbar.$el.offsetHeight;
+
+    this.contentWrapperStyle.marginTop = navHeight + "px";
+    // this.contentWrapperStyle.marginBottom = toolHeight + 20 + "px";
+  },
+
+  methods: {
+    navigationBackTap(){
+      this.$router.back()
+    },
+  },
+}
+</script>
+
+<style lang="scss" scoped>
+
+.content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.navigation-bar {
+  z-index: 1000;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+}
+
+.content-wrapper {
+  padding-top: 30px;
+  flex: 1;
+  @include scroll;
+}
+
+.field-wrapper{
+  margin: 10px;
+}
+
+.tool-bar{
+  z-index: 1000;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding: 10px;
+}
+
+
+</style>
