@@ -6,7 +6,7 @@
   <div class="content-wrapper" :style="contentWrapperStyle">
 
     <div class="withdrawal-amount-wrapper">
-      <withdrawal-amount total="100" blance="50"></withdrawal-amount>
+      <withdrawal-amount :total="withdrawalObject.total" :blance="withdrawalObject.blance"></withdrawal-amount>
     </div>
 
     <div class="payment-wrapper">
@@ -20,28 +20,12 @@
     </div>
 
     <div class="input-wrapper">
-      <div class="input-title">提现金额</div>
-      <div class="input">
-        <van-field class="input-field" v-model="fieldInput" type="number" clearable placeholder="请输入要提现的金额">
-          <template #button>
-            <van-button size="small" type="primary">全部</van-button>
-          </template>
-        </van-field>
-      </div>
-      <div class="input-tips">
-        最多可提现xxx元
-      </div>
-      <div class="input-poundage">
-        手续费1%
-      </div>
-      <div class="input-poundage-value">
-        手续费0元
-      </div>
-      <div class="input-poundage-tips">
-        提示:提现金额与手续费之和不能超过可提现余额
-      </div>
+      <withdrawal-input v-model="inputValue" :blanceValue="withdrawalObject.blance"></withdrawal-input>
     </div>
 
+    <div class="tool-bar" ref="toolbar">
+      <van-button type="primary" block @click="withdrawalTap">提现</van-button>
+    </div>
   </div>
 </div>
 </template>
@@ -56,6 +40,7 @@ import {
 } from "vant";
 
 import WithdrawalAmount from '@/components/withdrawal/withdrawal-amount'
+import WithdrawalInput from '@/components/withdrawal/withdrawal-input'
 
 export default {
   components: {
@@ -64,7 +49,8 @@ export default {
     [Field.name]: Field,
     [RadioGroup.name]: RadioGroup,
     [Radio.name]: Radio,
-    WithdrawalAmount
+    WithdrawalAmount,
+    WithdrawalInput
   },
 
   data() {
@@ -74,22 +60,28 @@ export default {
         marginBottom: "0px",
       },
       withdrawalType: "1",
-      fieldInput: "",
+      inputValue: "",
+      withdrawalObject: {
+        total: 1000,
+        blance: 100,
+      }
     }
   },
 
   mounted() {
     let navHeight = this.$refs.navbar.$el.offsetHeight
-    // let toolHeight = this.$refs.toolbar.$el.offsetHeight
-    // let toolHeight = this.$refs.toolbar.$el.offsetHeight;
-
+    let toolHeight = this.$refs.toolbar.offsetHeight
     this.contentWrapperStyle.marginTop = navHeight + "px";
-    // this.contentWrapperStyle.marginBottom = toolHeight + 20 + "px";
+    this.contentWrapperStyle.marginBottom = toolHeight + "px";
   },
 
   methods: {
     navigationBackTap() {
       this.$router.back()
+    },
+
+    withdrawalTap(){
+      this.inputValue = "9089"
     },
   },
 }
@@ -132,33 +124,12 @@ export default {
   margin-top: 20px;
 }
 
-.input-wrapper {
-  font-size: 15px;
-  padding: 15px;
-
-  .input-title {
-    height: 30px;
-  }
-
-  // .input-field{
-  //   background: #ffffff;
-  // }
-
-  .input-tips {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-
-  .input-poundage {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-
-  .input-poundage-value {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    color: red;
-  }
-
+.tool-bar{
+  z-index: 1000;
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding: 10px;
 }
 </style>

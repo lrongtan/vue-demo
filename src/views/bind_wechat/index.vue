@@ -21,8 +21,8 @@
         <van-field v-model="usernameInput" label="真实姓名" placeholder="请输入真实姓名"></van-field>
       </div>
     </div>
-    <div class="tool-bar" >
-      <van-button ref="toolbar" type="primary" block>提交</van-button>
+    <div class="tool-bar" ref="toolbar">
+      <van-button type="primary" block>提交</van-button>
     </div>
   </div>
 </template>
@@ -55,11 +55,9 @@ export default {
 
   mounted() {
     let navHeight = this.$refs.navbar.$el.offsetHeight
-    // let toolHeight = this.$refs.toolbar.$el.offsetHeight
-    // let toolHeight = this.$refs.toolbar.$el.offsetHeight;
-
+    let toolHeight = this.$refs.toolbar.offsetHeight
     this.contentWrapperStyle.marginTop = navHeight + "px";
-    // this.contentWrapperStyle.marginBottom = toolHeight + 20 + "px";
+    this.contentWrapperStyle.marginBottom = toolHeight + "px";
   },
 
   methods: {

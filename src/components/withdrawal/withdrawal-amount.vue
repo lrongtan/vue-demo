@@ -7,7 +7,7 @@
     </div>
     <div class="item-wrapper">
       <div class="title">余额</div>
-      <div class="value">{{blance}}</div>
+      <div class="value">{{blance}}元</div>
     </div>
   </div>
 </div>
