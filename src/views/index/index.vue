@@ -40,7 +40,7 @@ export default {
   },
 
   computed: {
-    userToken: function(){
+    userToken: function () {
       return this.$store.getters.userToken;
     }
   },
@@ -50,9 +50,11 @@ export default {
     this.tabbarStyle.height = val + "px";
     console.log("tabbar的高度");
     console.log(val);
-
-    if(this.userToken.token == null){
-      this.$router.push({name: 'login'})
+    console.log(this.userToken);
+    if (this.userToken.token == null) {
+      this.$router.replace({
+        name: 'login'
+      })
 
     }
   },

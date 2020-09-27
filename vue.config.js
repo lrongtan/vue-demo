@@ -19,7 +19,7 @@ module.exports = {
                 target: process.env.APP_HOST,         //baseUrl
                 changeOrigin: true,
                 pathRewrite:{
-                    '^/api': '/'
+                    '^/api': '/api'
                 }
             }
         }

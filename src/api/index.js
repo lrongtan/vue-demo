@@ -1,6 +1,8 @@
 
 import axios from 'axios'
 
+import store from '../store'
+
 
 //登录
 // {
@@ -10,7 +12,16 @@ import axios from 'axios'
 //   "appId": "string"
 // }
 export const login = (params) => {
-  return axios.post('/login', params)
+  let agentId = store.getters.agentId;
+  let appId = store.getters.appId;
+
+  var appVal = {
+    agentId: agentId,
+    appId: appId
+  }
+  let val = Object.assign(appVal,params);
+  console.log(val)
+  return axios.post('/api/login', val)
 } 
 
 
