@@ -22,6 +22,8 @@ import {
   TabbarItem
 } from "vant";
 
+// import 
+
 export default {
   components: {
     [Tabbar.name]: Tabbar,
@@ -33,8 +35,14 @@ export default {
       tabbarIndex: 0,
       tabbarStyle: {
         height: "0px"
-      }
+      },
     };
+  },
+
+  computed: {
+    userToken: function(){
+      return this.$store.getters.userToken;
+    }
   },
 
   mounted() {
@@ -42,6 +50,11 @@ export default {
     this.tabbarStyle.height = val + "px";
     console.log("tabbar的高度");
     console.log(val);
+
+    if(this.userToken.token == null){
+      this.$router.push({name: 'login'})
+
+    }
   },
 
   methods: {}

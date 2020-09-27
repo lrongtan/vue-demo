@@ -60,6 +60,9 @@ export default {
         this.$toast('请输入正确的手机号')
         return
       }
+      this.api.sendCode({
+        mobile:this.accountInput
+      })
       this.sendCodeSuccess()
     },
 

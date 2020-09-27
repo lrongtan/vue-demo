@@ -10,13 +10,13 @@ module.exports = {
     indexPath: 'mobile.html',
     devServer: {
         open: true,
-        port: 8080,
+        port: 8081,
         https: false,
         // hotOnly表示当编译失败时，不刷新页面
         hotOnly: false,
         proxy: {
             '/api': {
-                target: "http:www.baidu.com",         //baseUrl
+                target: process.env.APP_HOST,         //baseUrl
                 changeOrigin: true,
                 pathRewrite:{
                     '^/api': '/'
