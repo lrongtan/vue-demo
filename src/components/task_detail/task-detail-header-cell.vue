@@ -55,7 +55,7 @@ export default {
       return Until.taskTypeToText(this.taskDetail.taskType)
     },
     taskReward: function(){
-      return Until.taskTypeToText(this.taskDetail.reward)
+      return Until.moneyFenToYuan(this.taskDetail.reward)
     }
   },
 

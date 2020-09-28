@@ -111,4 +111,12 @@ export const taskOrderDetail = (params) => {
   return axios.get(urlPath)
 }
 
+export const taskDetailAll = (params) => {
+  return axios.all([taskDetail({id : params.id}),taskOrderDetail({id : params.id})])
+}
+
+export const axiosVal = () => {
+  return axios
+}
+
 
