@@ -5,19 +5,19 @@
   </div>
   <div class="content-wrapper" :style="contentWrapperStyle">
     <div class="content-header">
-      <task-detail-header-cell></task-detail-header-cell>
+      <task-detail-header-cell :taskDetail="taskDetail"></task-detail-header-cell>
     </div>
     <div class="content-desc">
       <task-detail-content-cell title="任务描述">
         <div class="desc">
-          这是任务描述这是任务描述这是任务描述这是任务描述这是任务描述这是任务描述这是任务描述这是任务描述
+          {{taskDetail.description ? taskDetail.description : ""}}
         </div>
       </task-detail-content-cell>
     </div>
     <div class="content-desc">
       <task-detail-content-cell title="任务限制">
         <div class="desc">
-          任务限制任务限制任务限制任务限制任务限制任务限制任务限制任务限制任务限制任务限制任务限制任务限制任务限制
+          {{taskDetail.applyCondition ? taskDetail.applyCondition : ""}}
         </div>
       </task-detail-content-cell>
     </div>
@@ -93,6 +93,7 @@ export default {
         marginBottom: '0px',
       },
       inputValue: "",
+      taskDetail: {},
     }
   },
 
@@ -101,14 +102,48 @@ export default {
     let toolHeight = this.$refs.toolbar.$el.offsetHeight
     this.contentWrapperStyle.marginTop = navHeight + 'px'
     this.contentWrapperStyle.marginBottom = toolHeight + 'px'
+    let taskItem = this.$route.params.taskItem
+    this.taskDetail = JSON.parse(taskItem)
+    console.log(this.taskDetail)
+    this.onTaskDetail()
+  },
+
+  updated() {
+    // let taskItem = this.$route.params.taskItem
+    // this.taskDetail = JSON.parse(taskItem)
+    // console.log(this.taskDetail)
+    // this.onTaskDetail()
   },
 
   methods: {
     onDrawTap(){
       console.log(this.inputValue)
+      let _this = this
+      this.$toast.loading({
+        message: "正在操作..."
+      })
+      this.api.taskOrderApply({
+        id: this.taskDetail.id
+      }).then( res => {
+        console.log(res)
+        _this.$toast("领取成功")
+      }).catch( res => {
+
+      })
     },
     navigationBackTap(){
       this.$router.back()
+    },
+    onTaskDetail(){
+      let _this = this
+      this.api.taskDetail({
+        id: this.taskDetail.id
+      }).then( res => {
+        console.log(res)
+        _this.taskDetail = res.data
+      }).catch( res => {
+
+      })
     }
   },
 };

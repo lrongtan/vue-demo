@@ -6,8 +6,8 @@
   <div class="content-wrapper" :style="contentWrapperStyle">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多数据了" @load="onLoad">
-        <div class="cell-wrapper" v-for="item in m_list" :key="item" @click="onCellWrapperTap(item)">
-          <home-list-cell :title="item"></home-list-cell>
+        <div class="cell-wrapper" v-for="item in m_list" :key="item.id" @click="onCellWrapperTap(item)">
+          <home-list-cell :taskItem="item"></home-list-cell>
         </div>
       </van-list>
     </van-pull-refresh>
@@ -33,9 +33,13 @@ export default {
   data() {
     return {
       refreshing: false,
-      loading: false,
+      loading: true,
       finished: false,
       m_list: [],
+      m_page: {
+        pageIndex: 1,
+        pageSize: 10,
+      },
       contentWrapperStyle: {
         marginTop: '0px',
         marginBottom: '0px',
@@ -46,40 +50,53 @@ export default {
   mounted() {
     let navHeight = this.$refs.navbar.$el.offsetHeight
     this.contentWrapperStyle.marginTop = navHeight + 'px'
+    this.refreshing = true
+    this.onRefresh()
   },
 
   methods: {
     onRefresh() {
-
       // 清空列表数据
       this.finished = false;
       // 重新加载数据
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
-      this.onLoad()
+      this.m_page.pageIndex = 1;
+      this.onTaskList();
     },
     
     onLoad() {
-      let _this = this
-      setTimeout(function () {
+      this.m_page.pageIndex = this.m_page.pageIndex + 1;
+      this.onTaskList()
+    },
+
+    onTaskList(){
+      let _this = this;
+      this.api.taskPageList(this.m_page).then( res => {
+        _this.loading = false;
         if (_this.refreshing) {
           _this.finished = false
           _this.m_list = []
           _this.refreshing = false
         }
-        for (let i = 0; i < 10; i++) {
-          _this.m_list.push(_this.m_list.length + 1)
-        }
-        if (_this.m_list.length > 40) {
+        res.data.records.forEach( val => {
+          _this.m_list.push(val)
+        })
+
+        if (_this.m_list.length >= res.data.total) {
           _this.finished = true
         }
+      }).catch( res => {
         _this.loading = false
-      }, 2000)
+        _this.refreshing = false
+        _this.finished = true
+      })
     },
     
     onCellWrapperTap(cellItem){
       console.log(cellItem)
-      this.$router.push({name: 'task_detail'})
+      let jsonText = JSON.stringify(cellItem)
+      this.$router.push({name: 'task_detail',params: {taskItem: jsonText}})
     },
   },
 }

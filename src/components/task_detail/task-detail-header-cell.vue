@@ -7,18 +7,18 @@
     </div>
     <div class="content-right">
       <div class="title-wrapper">
-        <div class="title">任务标题</div>
-        <div class="money">佣￥<span>100</span></div>
+        <div class="title">{{taskDetail.taskTitle}}</div>
+        <div class="money">佣￥<span>{{taskReward}}</span></div>
       </div>
       <div class="tag-wrapper">
-        <div class="tag">任务类型</div>
-        <div class="tag tag-margin-left">平台应用</div>
-        <div class="submit-time">1小时内提交</div>
+        <div class="tag">{{taskType}}</div>
+        <div class="tag tag-margin-left">{{taskDetail.channel}}</div>
+        <div class="submit-time">{{taskTime}}内提交</div>
       </div>
       <div class="amount-wrapper">
-        <div class="task-id">悬赏ID: xxxxxxx</div>
-        <div class="remaining"><span>10</span>/100</div>
-        <div class="check-time">24小时内审核</div>
+        <div class="task-id">悬赏ID: {{taskDetail.id}}</div>
+        <div class="remaining"><span>{{taskDetail.surplusCount}}</span>/{{taskDetail.taskCount}}</div>
+        <div class="check-time">{{auditTime}}内审核</div>
       </div>
     </div>
   </div>
@@ -27,18 +27,11 @@
 
 <script>
 
+import * as Until from '../../utils/index'
+
 import {
   Image
 } from "vant"
-
-var img1 = require('../../assets/images/icon_类型_纯关注.png')
-var img2 = require('../../assets/images/icon_类型_纯转发.png')
-var img3 = require('../../assets/images/icon_类型_电商相关.png')
-var img4 = require('../../assets/images/icon_类型_开户投资.png')
-var img5 = require('../../assets/images/icon_类型_其他.png')
-var img6 = require('../../assets/images/icon_类型_认证绑卡.png')
-var img7 = require('../../assets/images/icon_类型_下载注册.png')
-
 
 export default {
   components: {
@@ -46,18 +39,38 @@ export default {
   },
 
   props: {
-    imageType: {
-      type: Number,
-      default: 1,
+    taskDetail: Object
+  },
+  data() {
+    return {
+      taskTime: "",
+      auditTime: "",
     }
   },
   computed: {
     iconImageType: function () {
-      switch (this.imageType) {
-        case 1:
-          return img1;
-      }
+      return Until.taskTypeToImage(this.taskDetail.taskType)
+    },
+    taskType: function(){
+      return Until.taskTypeToText(this.taskDetail.taskType)
+    },
+    taskReward: function(){
+      return Until.taskTypeToText(this.taskDetail.reward)
     }
+  },
+
+  mounted() {
+    this.taskTime = Until.secondTodhms(this.taskDetail.taskDuration)
+    this.auditTime = Until.secondTodhms(this.taskDetail.auditDuration)
+  },
+
+  updated() {
+    this.taskTime = Until.secondTodhms(this.taskDetail.taskDuration)
+    this.auditTime = Until.secondTodhms(this.taskDetail.auditDuration)
+  },
+  
+  methods: {
+    
   },
 }
 </script>

@@ -6,16 +6,16 @@
     </div>
     <div class="content-right">
       <div class="title-wrapper">
-        <div class="title">{{title}}</div>
-        <div class="money">佣￥<span>{{title}}</span></div>
+        <div class="title">{{taskItem.taskTitle}}</div>
+        <div class="money">佣￥<span>{{taskReward}}</span></div>
       </div>
       <div class="tag-wrapper">
-        <div class="tag">任务类型</div>
-        <div class="tag tag-margin-left">平台应用</div>
+        <div class="tag">{{taskType}}</div>
+        <div class="tag tag-margin-left">{{taskItem.channel}}</div>
       </div>
       <div class="amount-wrapper">
-        <div class="finished">{{title}}已赚</div>
-        <div class="remaining">剩<span>{{title}}</span>个名额</div>
+        <div class="finished">{{taskItem.finishCount}}已赚</div>
+        <div class="remaining">剩<span>{{taskItem.surplusCount}}</span>个名额</div>
       </div>
     </div>
   </div>
@@ -23,17 +23,12 @@
 </template>
 
 <script>
+
+import * as Until from '../../utils/index'
+
 import {
   Image
 } from "vant"
-
-var img1 = require('../../assets/images/icon_类型_纯关注.png')
-var img2 = require('../../assets/images/icon_类型_纯转发.png')
-var img3 = require('../../assets/images/icon_类型_电商相关.png')
-var img4 = require('../../assets/images/icon_类型_开户投资.png')
-var img5 = require('../../assets/images/icon_类型_其他.png')
-var img6 = require('../../assets/images/icon_类型_认证绑卡.png')
-var img7 = require('../../assets/images/icon_类型_下载注册.png')
 
 export default {
   components: {
@@ -41,13 +36,7 @@ export default {
   },
 
   props: {
-    title: {
-      type: Number,
-    },
-    imageType: {
-      type: Number,
-      default: 1,
-    }
+    taskItem: Object
   },
 
   data() {
@@ -58,10 +47,13 @@ export default {
 
   computed: {
     iconImageType: function () {
-      switch (this.imageType) {
-        case 1:
-          return img1;
-      }
+      return Until.taskTypeToImage(this.taskItem.taskType)
+    },
+    taskType: function(){
+      return Until.taskTypeToText(this.taskItem.taskType)
+    },
+    taskReward: function(){
+      return Until.taskTypeToText(this.taskItem.reward)
     }
   },
 }

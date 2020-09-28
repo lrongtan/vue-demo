@@ -35,10 +35,19 @@ export default {
   data() {
     return {
       refreshing: false,
-      loading: false,
+      loading: true,
       finished: false,
       m_list: [],
+      m_page: {
+        pageIndex: 1,
+        pageSize: 10,
+      },
     };
+  },
+
+  mounted() {
+    this.refreshing = true
+    this.onRefresh()
   },
 
   methods: {
@@ -48,25 +57,41 @@ export default {
       // 重新加载数据
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
-      this.onLoad();
+      this.m_page.pageIndex = 1;
+      this.onTaskOrderList();
     },
 
     onLoad() {
+      this.m_page.pageIndex = this.m_page.pageIndex + 1;
+      this.onTaskOrderList()
+    },
+
+    onTaskOrderList(){
       let _this = this;
-      setTimeout(function () {
-        if (_this.refreshing) {
-          _this.finished = false;
-          _this.m_list = [];
-          _this.refreshing = false;
-        }
-        for (let i = 0; i < 10; i++) {
-          _this.m_list.push(_this.m_list.length + 1);
-        }
-        if (_this.m_list.length > 40) {
-          _this.finished = true;
-        }
+      this.api.taskOrderPageList({
+        pageIndex: this.m_page.pageIndex,
+        pageSize: this.m_page.pageSize,
+        accountId: this.taskType,
+        state: this.taskType,
+      }).then( res => {
         _this.loading = false;
-      }, 2000);
+        if (_this.refreshing) {
+          _this.finished = false
+          _this.m_list = []
+          _this.refreshing = false
+        }
+        res.data.records.forEach( val => {
+          _this.m_list.push(val)
+        })
+
+        if (_this.m_list.length >= res.data.total) {
+          _this.finished = true
+        }
+      }).catch( res => {
+        _this.refreshing = false
+        _this.finished = true
+        _this.loading = false
+      })
     },
 
     onCellWrapperTap(cellItem) {

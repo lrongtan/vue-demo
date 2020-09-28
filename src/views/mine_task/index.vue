@@ -6,16 +6,16 @@
     <div class="content-wrapper" :style="contentWrapperStyle">
       <van-tabs v-model="active" color="#ffb100" :sticky="true" :offset-top="contentWrapperStyle.marginTop" title-active-color="#ffb100">
         <van-tab title="未提交">
-          <mine-task-list :task-type="0"></mine-task-list>
-        </van-tab>
-        <van-tab title="审核中">
           <mine-task-list :task-type="1"></mine-task-list>
         </van-tab>
-        <van-tab title="已审核">
+        <van-tab title="审核中">
           <mine-task-list :task-type="2"></mine-task-list>
         </van-tab>
-        <van-tab title="未通过">
+        <van-tab title="已审核">
           <mine-task-list :task-type="3"></mine-task-list>
+        </van-tab>
+        <van-tab title="未通过">
+          <mine-task-list :task-type="4"></mine-task-list>
         </van-tab>
       </van-tabs>
     </div>

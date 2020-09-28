@@ -1,6 +1,7 @@
 
 import axios from  "axios"
-// import store from "../store"
+import { Toast } from "vant"
+import store from "../store"
 
 export default (Vue) => {
     Object.defineProperties(Vue.prototype, {
@@ -16,6 +17,15 @@ export default (Vue) => {
 
     //  请求拦截器
     axios.interceptors.request.use(function (config){
+        console.log("请求拦截");
+        console.log(config.url);
+        // 发送验证码 和 登录 不需要  Authorization
+        var reg = RegExp(/\/api\/((v1\/*\d{11}\/verifyCode)|login)/);
+        if (!reg.test(config.url)) {
+            let userToken = store.getters.userToken;
+            config.headers.Authorization = userToken.token;
+            console.log(userToken.token)
+        }
         return config
     }, function (error){
         return Promise.reject(error)
@@ -24,9 +34,17 @@ export default (Vue) => {
     // 响应拦截器
     axios.interceptors.response.use(function (respond){
         let data = respond.data
+        console.log("响应拦截");
+        console.log(respond.data);
+        if (data.code != 200 || data.code != "200") {
+            Toast(respond.data.message);
+            return Promise.reject(respond)
+        }
         return data
     }, function (error){
-        return Promise.reject(error)
+        console.log("响应失败");
+        Toast(error.response.data.message);
+        return Promise.reject(error.response)
     })
 
 }
