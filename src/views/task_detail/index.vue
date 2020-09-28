@@ -1,101 +1,64 @@
 <template>
-  <div class="content">
-    <div class="navigation-bar">
-      <van-nav-bar
-        title="详情"
-        ref="navbar"
-        left-arrow
-        @click-left="navigationBackTap"
-      ></van-nav-bar>
+<div class="content">
+  <div class="navigation-bar">
+    <van-nav-bar title="详情" ref="navbar" left-arrow @click-left="navigationBackTap"></van-nav-bar>
+  </div>
+  <div class="content-wrapper" :style="contentWrapperStyle">
+    <div class="content-header">
+      <task-detail-header-cell :taskDetail="taskDetail"></task-detail-header-cell>
     </div>
-    <div class="content-wrapper" :style="contentWrapperStyle">
-      <div class="content-header">
-        <task-detail-header-cell
-          :taskDetail="taskDetail"
-        ></task-detail-header-cell>
-      </div>
-      <div class="content-desc">
-        <task-detail-content-cell title="任务描述">
-          <div class="desc">
-            {{ taskDetail.description ? taskDetail.description : "" }}
+    <div class="content-desc">
+      <task-detail-content-cell title="任务描述">
+        <div class="desc">
+          {{ taskDetail.description ? taskDetail.description : "" }}
+        </div>
+      </task-detail-content-cell>
+    </div>
+    <div class="content-desc">
+      <task-detail-content-cell title="任务限制">
+        <div class="desc">
+          {{ taskDetail.applyCondition ? taskDetail.applyCondition : "" }}
+        </div>
+      </task-detail-content-cell>
+    </div>
+    <div class="content-step">
+      <task-detail-content-cell title="任务步骤">
+        <task-detail-step-wrapper title="网址类型" :currentIndex="0" :totalIndex="6">
+          <div class="step-url">
+            <van-button type="primary" size="small" block>打开链接</van-button>
           </div>
-        </task-detail-content-cell>
-      </div>
-      <div class="content-desc">
-        <task-detail-content-cell title="任务限制">
-          <div class="desc">
-            {{ taskDetail.applyCondition ? taskDetail.applyCondition : "" }}
-          </div>
-        </task-detail-content-cell>
-      </div>
-      <div class="content-step">
-        <task-detail-content-cell title="任务步骤">
-          <task-detail-step-wrapper
-            title="网址类型"
-            :currentIndex="0"
-            :totalIndex="6"
-          >
-            <div class="step-url">
-              <van-button type="primary" size="small" block
-                >打开链接</van-button
-              >
-            </div>
-          </task-detail-step-wrapper>
-          <task-detail-step-wrapper
-            title="图片类型"
-            :currentIndex="1"
-            :totalIndex="6"
-          >
-            <task-detail-step-image></task-detail-step-image>
-          </task-detail-step-wrapper>
-          <task-detail-step-wrapper
-            title="二维码类型"
-            :currentIndex="2"
-            :totalIndex="6"
-          >
-            <task-detail-step-qrcode></task-detail-step-qrcode>
-          </task-detail-step-wrapper>
-          <task-detail-step-wrapper
-            title="复制数据类型步骤"
-            :currentIndex="3"
-            :totalIndex="6"
-          >
-            <task-detail-step-copy-data
-              copy-data="我是复制数据"
-            ></task-detail-step-copy-data>
-          </task-detail-step-wrapper>
-          <task-detail-step-wrapper
-            title="截图收集步骤类型"
-            :currentIndex="4"
-            :totalIndex="6"
-          >
-            <task-detail-step-collect-image></task-detail-step-collect-image>
-          </task-detail-step-wrapper>
-          <task-detail-step-wrapper
-            title="信息收集步骤类型"
-            :currentIndex="5"
-            :totalIndex="6"
-          >
-            <task-detail-step-collect-info
-              v-model="inputValue"
-              placeholder="按要求输入信息"
-            ></task-detail-step-collect-info>
-          </task-detail-step-wrapper>
-        </task-detail-content-cell>
-      </div>
-      <div class="tool-bar-wrapper">
-        <task-detail-tool-bar
-          ref="toolbar"
-          :tool-type="1"
-          @onDrawTap="onDrawTap"
-        ></task-detail-tool-bar>
-      </div>
+        </task-detail-step-wrapper>
+        <task-detail-step-wrapper title="图片类型" :currentIndex="1" :totalIndex="6">
+          <task-detail-step-image></task-detail-step-image>
+        </task-detail-step-wrapper>
+        <task-detail-step-wrapper title="二维码类型" :currentIndex="2" :totalIndex="6">
+          <task-detail-step-qrcode></task-detail-step-qrcode>
+        </task-detail-step-wrapper>
+        <task-detail-step-wrapper title="复制数据类型步骤" :currentIndex="3" :totalIndex="6">
+          <task-detail-step-copy-data copy-data="我是复制数据"></task-detail-step-copy-data>
+        </task-detail-step-wrapper>
+        <task-detail-step-wrapper title="截图收集步骤类型" :currentIndex="4" :totalIndex="6">
+          <task-detail-step-collect-image></task-detail-step-collect-image>
+        </task-detail-step-wrapper>
+        <task-detail-step-wrapper title="信息收集步骤类型" :currentIndex="5" :totalIndex="6">
+          <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
+        </task-detail-step-wrapper>
+      </task-detail-content-cell>
+    </div>
+    <div class="tool-bar-wrapper">
+      <task-detail-tool-bar ref="toolbar" :tool-type="0" @onDrawTap="onDrawTap"></task-detail-tool-bar>
     </div>
   </div>
+</div>
 </template>
 
 <script>
-import { NavBar, List, PullRefresh, Button } from "vant";
+import {
+  NavBar,
+  List,
+  PullRefresh,
+  Button
+} from "vant";
 import TaskDetailHeaderCell from "@/components/task_detail/task-detail-header-cell";
 import TaskDetailContentCell from "@/components/task_detail/task-detail-content-cell";
 import TaskDetailStepWrapper from "@/components/task_detail/task-detail-step-wrapper";
