@@ -8,13 +8,13 @@
         </div>
         <div class="content-right">
           <div class="title-wrapper">
-            <div class="title">{{title}}</div>
+            <div class="title">{{taskOrder.taskTitle}}</div>
             <div class="money">
-              佣￥<span>{{title}}</span>
+              佣￥<span>{{taskReward}}</span>
             </div>
           </div>
           <div class="check-time-wrapper">
-            审核时间: 24小时内审核
+            审核时间: {{auditTime}}内审核
           </div>
           <div class="check-status-wrapper">
             审核状态
@@ -22,22 +22,22 @@
         </div>
       </div>
       <div class="handle-bar">
-        
+        <div class="bar-state" v-if="taskOrder.state == 5" @click.stop="onCancelTap">取消报名</div>
+        <div class="bar-state" v-if="taskOrder.state == 4" @click.stop="onAlterTap">修改</div>
+        <div class="bar-state-wrapper" v-if="taskOrder.state == 1">
+          <div class="bar-state" @click.stop="onDeleteTap">删除记录</div>
+          <div class="bar-line"></div>
+          <div class="bar-state" @click.stop="onReApplyTap">重新报名</div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Image } from "vant";
+import * as Until from '../../utils/index';
 
-var img1 = require("../../assets/images/icon_类型_纯关注.png");
-var img2 = require("../../assets/images/icon_类型_纯转发.png");
-var img3 = require("../../assets/images/icon_类型_电商相关.png");
-var img4 = require("../../assets/images/icon_类型_开户投资.png");
-var img5 = require("../../assets/images/icon_类型_其他.png");
-var img6 = require("../../assets/images/icon_类型_认证绑卡.png");
-var img7 = require("../../assets/images/icon_类型_下载注册.png");
+import { Image } from "vant";
 
 export default {
   components: {
@@ -45,21 +45,48 @@ export default {
   },
 
   props: {
-    title: {
-      type: Number,
-    },
-    imageType: {
-      type: Number,
-      default: 1,
-    },
+    taskOrder: Object,
+  },
+
+  data() {
+    return {
+      taskTime: "",
+      auditTime: "",
+    }
   },
 
   computed: {
     iconImageType: function () {
-      switch (this.imageType) {
-        case 1:
-          return img1;
-      }
+      return Until.taskTypeToImage(this.taskOrder.taskType)
+    },
+    taskType: function(){
+      return Until.taskTypeToText(this.taskOrder.taskType)
+    },
+    taskReward: function(){
+      return Until.moneyFenToYuan(this.taskOrder.reward)
+    }
+  },
+
+  mounted() {
+    // this.taskTime = Until.secondTodhms(this.taskOrder.taskDuration)
+    // this.auditTime = Until.secondTodhms(this.taskOrder.auditDuration)
+  },
+
+
+  methods: {
+    onCancelTap(){
+      this.$emit('onCancelTap') 
+    },
+
+    onDeleteTap(){
+      this.$emit('onDeleteTap') 
+    },
+
+    onReApplyTap(){
+      this.$emit('onReApplyTap')
+    },
+    onAlterTap(){
+      this.$emit('onAlterTap')
     },
   },
 };
@@ -122,6 +149,29 @@ export default {
   height: 25px;
   font-size: 13px;
   color: red;
+}
+
+.handle-bar{
+  background: $background-color;
+}
+
+.bar-state{
+  background: white;
+  margin-top: 1px;
+  color: $theme-color;
+  font-size: 15px;
+  padding: 15px;
+  text-align: center;
+  flex: 1;
+}
+
+.bar-state-wrapper{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .bar-line{
+    width: 1px;
+  }
 }
 
 

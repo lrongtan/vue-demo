@@ -109,13 +109,6 @@ export default {
     this.onTaskDetailAll();
   },
 
-  updated() {
-    // let taskItem = this.$route.params.taskItem
-    // this.taskDetail = JSON.parse(taskItem)
-    // console.log(this.taskDetail)
-    // this.onTaskDetail()
-  },
-
   methods: {
     onDrawTap() {
       console.log(this.inputValue);

@@ -54,6 +54,13 @@ export default {
     this.onRefresh()
   },
 
+  activated() {
+    if (!this.refreshing) {
+      this.refreshing = true
+      this.onRefresh()
+    }
+  },
+
   methods: {
     onRefresh() {
       // 清空列表数据

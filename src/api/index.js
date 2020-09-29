@@ -53,21 +53,21 @@ export const taskDetail = (params) => {
 // id
 export const taskOrderApply = (params) => {
   let urlPath = "/api/task/order/apply/" + params.id;
-  return axios.put(urlPath)
+  return axios.post(urlPath)
 }
 
 //任务取消
 // id
 export const taskOrderCancel = (params) => {
   let urlPath = "/api/task/order/cancel/" + params.id;
-  return axios.put(urlPath)
+  return axios.post(urlPath)
 }
 
 //任务提交
 // id
 export const taskOrderCommit = (params) => {
   let urlPath = "/api/task/order/commit/" + params.id;
-  return axios.put(urlPath, params)
+  return axios.post(urlPath, params)
 }
 
 //删除任务订单
@@ -82,7 +82,7 @@ export const taskOrderDelete = (params) => {
 
 export const taskOrderReApply = (params) => {
   let urlPath = "/api/task/order/re-apply/" + params.id;
-  return axios.put(urlPath)
+  return axios.post(urlPath)
 }
 
 

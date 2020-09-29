@@ -18,7 +18,7 @@ export default (Vue) => {
     //  请求拦截器
     axios.interceptors.request.use(function (config){
         console.log("请求拦截");
-        console.log(config.url);
+        console.log(config);
         // 发送验证码 和 登录 不需要  Authorization
         var reg = RegExp(/\/api\/((v1\/*\d{11}\/verifyCode)|login)/);
         if (!reg.test(config.url)) {
@@ -26,6 +26,9 @@ export default (Vue) => {
             config.headers.Authorization = userToken.token;
             console.log(userToken.token)
         }
+        // if (config.method == "put") {
+        //     config.headers.put['Content-Type'] = 'text/plain'
+        // }
         return config
     }, function (error){
         return Promise.reject(error)

@@ -3,14 +3,25 @@
   <div class="component">
     <div class="component-wrapper">
       <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list v-model="loading" :finished="finished" finished-text="没有更多数据了" @load="onLoad">
+        <van-list
+          v-model="loading"
+          :finished="finished"
+          finished-text="没有更多数据了"
+          @load="onLoad"
+        >
           <div
             class="cell-wrapper"
             v-for="item in m_list"
-            :key="item"
+            :key="item.id"
             @click="onCellWrapperTap(item)"
           >
-          <mine-task-list-cell :title="item"></mine-task-list-cell>
+            <mine-task-list-cell
+              :taskOrder="item"
+              @onCancelTap="onCancelTap(item)"
+              @onDeleteTap="onDeleteTap(item)"
+              @onReApplyTap="onReApplyTap(item)"
+              @onAlterTap="onAlterTap(item)"
+            ></mine-task-list-cell>
           </div>
         </van-list>
       </van-pull-refresh>
@@ -46,8 +57,8 @@ export default {
   },
 
   mounted() {
-    this.refreshing = true
-    this.onRefresh()
+    this.refreshing = true;
+    this.onRefresh();
   },
 
   methods: {
@@ -63,50 +74,104 @@ export default {
 
     onLoad() {
       this.m_page.pageIndex = this.m_page.pageIndex + 1;
-      this.onTaskOrderList()
+      this.onTaskOrderList();
     },
 
-    onTaskOrderList(){
+    onTaskOrderList() {
       let _this = this;
-      this.api.taskOrderPageList({
-        pageIndex: this.m_page.pageIndex,
-        pageSize: this.m_page.pageSize,
-        accountId: this.taskType,
-        state: this.taskType,
-      }).then( res => {
-        _this.loading = false;
-        if (_this.refreshing) {
-          _this.finished = false
-          _this.m_list = []
-          _this.refreshing = false
-        }
-        res.data.records.forEach( val => {
-          _this.m_list.push(val)
+      this.api
+        .taskOrderPageList({
+          pageIndex: this.m_page.pageIndex,
+          pageSize: this.m_page.pageSize,
+          accountId: this.taskType,
+          state: this.taskType,
         })
+        .then((res) => {
+          _this.loading = false;
+          if (_this.refreshing) {
+            _this.finished = false;
+            _this.m_list = [];
+            _this.refreshing = false;
+          }
+          res.data.records.forEach((val) => {
+            _this.m_list.push(val);
+          });
 
-        if (_this.m_list.length >= res.data.total) {
-          _this.finished = true
-        }
-      }).catch( res => {
-        _this.refreshing = false
-        _this.finished = true
-        _this.loading = false
-      })
+          if (_this.m_list.length >= res.data.total) {
+            _this.finished = true;
+          }
+        })
+        .catch((res) => {
+          _this.refreshing = false;
+          _this.finished = true;
+          _this.loading = false;
+        });
     },
 
     onCellWrapperTap(cellItem) {
       console.log(cellItem);
-      this.$router.push({ name: "task_detail" });
+      // this.$router.push({ name: "task_detail" });
     },
+
+    onCancelTap(cellItem) {
+      this.$toast.loading({
+        message: "正在操作...",
+      });
+      let _this = this;
+      this.api
+        .taskOrderCancel({
+          id: cellItem.id,
+        })
+        .then((res) => {
+          _this.$toast("操作成功");
+          _this.refreshing = true;
+          _this.onRefresh();
+        })
+        .catch((res) => {});
+    },
+
+    onDeleteTap(cellItem) {
+      this.$toast.loading({
+        message: "正在操作...",
+      });
+      let _this = this;
+      this.api
+        .taskOrderDelete({
+          id: cellItem.id,
+        })
+        .then((res) => {
+          _this.$toast("操作成功");
+          _this.refreshing = true;
+          _this.onRefresh();
+        })
+        .catch((res) => {});
+    },
+
+    onReApplyTap(cellItem) {
+      this.$toast.loading({
+        message: "正在操作...",
+      });
+      let _this = this;
+      this.api
+        .taskOrderReApply({
+          id: cellItem.id,
+        })
+        .then((res) => {
+          _this.$toast("操作成功");
+          _this.refreshing = true;
+          _this.onRefresh();
+        })
+        .catch((res) => {});
+    },
+    onAlterTap(cellItem) {},
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
-.cell-wrapper{
+.cell-wrapper {
   background: white;
   margin: 10px;
-  border-radius: 5px
+  border-radius: 5px;
 }
 </style>

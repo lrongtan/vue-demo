@@ -64,7 +64,7 @@ export default {
     this.auditTime = Until.secondTodhms(this.taskDetail.auditDuration)
   },
 
-  updated() {
+  activated() {
     this.taskTime = Until.secondTodhms(this.taskDetail.taskDuration)
     this.auditTime = Until.secondTodhms(this.taskDetail.auditDuration)
   },
