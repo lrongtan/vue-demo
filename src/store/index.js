@@ -7,13 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userToken: sessionStorage['userToken'] ? JSON.parse(sessionStorage['userToken']):{},
+    userToken: localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')):{},
     agentId: "1",
     appId: "1000001",
   },
   mutations: {
     SET_USER_TOKEN(state, info){
-      sessionStorage['userToken'] = JSON.stringify(info)
+      localStorage.setItem('userToken', JSON.stringify(info))
       state.userToken = info
     },
     SET_AGENT_ID(state, info){

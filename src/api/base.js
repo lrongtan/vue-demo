@@ -26,9 +26,6 @@ export default (Vue) => {
             config.headers.Authorization = userToken.token;
             console.log(userToken.token)
         }
-        // if (config.method == "put") {
-        //     config.headers.put['Content-Type'] = 'text/plain'
-        // }
         return config
     }, function (error){
         return Promise.reject(error)

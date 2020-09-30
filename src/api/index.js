@@ -72,9 +72,10 @@ export const taskOrderCommit = (params) => {
 
 //删除任务订单
 // id
+// /api/task/order/delete/
 export const taskOrderDelete = (params) => {
   let urlPath = "/api/task/order/delete/" + params.id;
-  return axios.delete(urlPath)
+  return axios.post(urlPath)
 }
 
 //重新报名
@@ -119,4 +120,12 @@ export const axiosVal = () => {
   return axios
 }
 
+
+// 提现
+// /api/withdrawarRecord/add
+// 添加提现记录表
+export const  withdrawarRecordAdd = (params) => {
+  let urlPath = "/api/withdrawarRecord/add/" + params.id;
+  return axios.post(urlPath,params)
+}
 
