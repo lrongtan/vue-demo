@@ -23,6 +23,13 @@
     </div>
     <div class="content-step">
       <task-detail-content-cell title="任务步骤">
+        <div class="task-step" v-for="(item, index) in taskDetail.taskStepObj" :key="index">
+          <task-detail-step-wrapper :title="item.txtDescribe" :currentIndex="index" :totalIndex="taskDetail.taskStepObj.length">
+            <div class="step-url" v-if="item.stepType == 1">
+              <van-button type="primary" size="small" block @click="onStep1Tap(item)">打开链接</van-button>
+            </div>
+          </task-detail-step-wrapper>
+        </div>
         <task-detail-step-wrapper title="网址类型" :currentIndex="0" :totalIndex="6">
           <div class="step-url">
             <van-button type="primary" size="small" block>打开链接</van-button>
@@ -53,6 +60,7 @@
 </template>
 
 <script>
+import * as Util from "../../utils/index.js";
 import {
   NavBar,
   List,
@@ -104,8 +112,10 @@ export default {
     this.contentWrapperStyle.marginTop = navHeight + "px";
     this.contentWrapperStyle.marginBottom = toolHeight + "px";
     let taskItem = this.$route.params.taskItem;
-    this.taskDetail = JSON.parse(taskItem);
-    console.log(this.taskDetail);
+    let task = JSON.parse(taskItem);
+    task.taskStepObj = Util.jsonClearEscapeCharacter(task.taskStep)
+    this.taskDetail = task
+    this.handleTaskStepObj(task.taskStepObj);
     this.onTaskDetailAll();
   },
 
@@ -138,11 +148,31 @@ export default {
         })
         .then(
           this.api.axiosVal().spread((val1, val2) => {
+            console.log("=============")
+            let val = JSON.stringify(val1.data.taskStep)
+            val1.data.taskStepObj = Util.jsonClearEscapeCharacter(val1.data.taskStep)
             _this.taskDetail = val1.data;
             _this.taskOrder = val2.data;
+            _this.handleTaskStepObj(val1.data.taskStepObj);
           })
         )
         .catch((res) => {});
+    },
+
+    handleTaskStepObj(taskStepObj) {
+      taskStepObj.forEach(val => {
+        val.stepType = val["step-type"]
+        val.txtDescribe = val["txt-describe"]
+        val.txtUrl = val["txt-url"]
+        console.log(val["step-type"])
+        console.log(val["txt-describe"])
+        console.log(val["txt-url"])
+      })
+    },
+
+    onStep1Tap(taskStep) {
+      // window.open(taskStep.txtUrl, '_blank')
+      window.location.href = taskStep.txtUrl
     },
   },
 };

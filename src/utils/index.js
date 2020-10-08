@@ -95,3 +95,15 @@ export function moneyFenToYuan(fen){
   }
   return fen/100
 }
+
+// 去除json数据的特殊字符
+
+export function jsonClearEscapeCharacter( val ){
+  var converter = document.createElement("DIV");
+  console.log(converter)
+  converter.innerHTML = val;
+  var text = converter.innerText;
+  console.log(text)
+  var json = JSON.parse(text);
+  return json
+}
