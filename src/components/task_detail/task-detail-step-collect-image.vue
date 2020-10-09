@@ -39,7 +39,9 @@ export default {
 
   methods: {
     uploaderAfterRead(file) {
-      console.log(file)
+      console.log("执行吗")
+      console.log(this.upFiles)
+      
     }
   },
 

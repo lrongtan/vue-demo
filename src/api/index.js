@@ -129,3 +129,11 @@ export const  withdrawarRecordAdd = (params) => {
   return axios.post(urlPath,params)
 }
 
+
+
+//单文件上传
+export const uploadFiles = (params) => {
+  let urlPath = "/upload/files";
+  return axios.post(urlPath,params)
+}
+
