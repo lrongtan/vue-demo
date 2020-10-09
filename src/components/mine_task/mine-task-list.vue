@@ -1,36 +1,22 @@
-
 <template>
-  <div class="component">
-    <div class="component-wrapper">
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
-        <van-list
-          v-model="loading"
-          :finished="finished"
-          finished-text="没有更多数据了"
-          @load="onLoad"
-        >
-          <div
-            class="cell-wrapper"
-            v-for="item in m_list"
-            :key="item.id"
-            @click="onCellWrapperTap(item)"
-          >
-            <mine-task-list-cell
-              :taskOrder="item"
-              @onCancelTap="onCancelTap(item)"
-              @onDeleteTap="onDeleteTap(item)"
-              @onReApplyTap="onReApplyTap(item)"
-              @onAlterTap="onAlterTap(item)"
-            ></mine-task-list-cell>
-          </div>
-        </van-list>
-      </van-pull-refresh>
-    </div>
+<div class="component">
+  <div class="component-wrapper">
+    <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-list v-model="loading" :finished="finished" finished-text="没有更多数据了" @load="onLoad">
+        <div class="cell-wrapper" v-for="item in m_list" :key="item.id" @click="onCellWrapperTap(item)">
+          <mine-task-list-cell :taskOrder="item" @onCancelTap="onCancelTap(item)" @onDeleteTap="onDeleteTap(item)" @onReApplyTap="onReApplyTap(item)" @onAlterTap="onAlterTap(item)"></mine-task-list-cell>
+        </div>
+      </van-list>
+    </van-pull-refresh>
   </div>
+</div>
 </template>
 
 <script>
-import { List, PullRefresh } from "vant";
+import {
+  List,
+  PullRefresh
+} from "vant";
 import MineTaskListCell from "./mine-task-list-cell";
 export default {
   components: {
@@ -111,9 +97,19 @@ export default {
     onCellWrapperTap(cellItem) {
       console.log(cellItem);
       if (cellItem.state == 1) {
-        
+        let idObj = {
+          orderId: cellItem.id,
+          taskId: cellItem.taskId,
+        }
+        let jsonText = JSON.stringify(idObj)
+        console.log(jsonText)
+        this.$router.push({
+          name: "mine_task_detail",
+          params: {
+            idObj: jsonText
+          },
+        });
       }
-      // this.$router.push({ name: "task_detail" });
     },
 
     onCancelTap(cellItem) {

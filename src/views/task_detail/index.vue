@@ -137,22 +137,14 @@ export default {
 
     onTaskDetailAll() {
       let _this = this;
-      this.api
-        .taskDetailAll({
-          id: this.taskDetail.id,
-        })
-        .then(
-          this.api.axiosVal().spread((val1, val2) => {
-            console.log("=============")
-            let val = JSON.stringify(val1.data.taskStep)
-            console.log(val)
-            val1.data.taskStepObj = Util.jsonClearEscapeCharacter(val1.data.taskStep)
-            _this.taskDetail = val1.data;
-            _this.taskOrder = val2.data;
-            _this.handleTaskStepObj(val1.data.taskStepObj);
-          })
-        )
-        .catch((res) => {});
+      this.api.taskDetail({
+        id: this.taskDetail.id
+      }).then(res => {
+        let val = res.data
+        val.taskStepObj = JSON.parse(val.taskStep)
+        _this.handleTaskStepObj(val.taskStepObj);
+        _this.taskDetail = val
+      }).catch((res) => {});
     },
 
     handleTaskStepObj(taskStepObj) {

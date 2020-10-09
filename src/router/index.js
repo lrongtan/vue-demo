@@ -55,6 +55,14 @@ const routes = [
     }
   },
   {
+    path: '/mine_task_detail',
+    name: 'mine_task_detail',
+    component: () => import('@views/mine_task/mine_task_detail.vue'),
+    meta: {
+      keepAlive: false,
+    }
+  },
+  {
     path: '/mine_service',
     name: 'mine_service',
     component: () => import('@views/mine_service/index.vue'),

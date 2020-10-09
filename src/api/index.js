@@ -116,6 +116,10 @@ export const taskDetailAll = (params) => {
   return axios.all([taskDetail({id : params.id}),taskOrderDetail({id : params.id})])
 }
 
+export const mineTaskDetail = (params) => {
+  return axios.all([taskDetail({id : params.taskId}),taskOrderDetail({id : params.orderId})])
+}
+
 export const axiosVal = () => {
   return axios
 }
