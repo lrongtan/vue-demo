@@ -28,28 +28,23 @@
             <div class="step-url" v-if="item.stepType == 1">
               <van-button type="primary" size="small" block @click="onStep1Tap(item)">打开链接</van-button>
             </div>
+            <div class="step-url" v-if="item.stepType == 2">
+              <task-detail-step-image :imgs="item.imgs"></task-detail-step-image>
+            </div>
+            <div class="step-url" v-if="item.stepType == 3">
+              <task-detail-step-qrcode :imgUrl="item.file"></task-detail-step-qrcode>
+            </div>
+            <div class="step-url" v-if="item.stepType == 4">
+              <task-detail-step-copy-data :copy-data="item.textData"></task-detail-step-copy-data>
+            </div>
+            <div class="step-url" v-if="item.stepType == 5">
+              <task-detail-step-collect-image></task-detail-step-collect-image>
+            </div>
+            <div class="step-url" v-if="item.stepType == 6">
+              <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
+            </div>
           </task-detail-step-wrapper>
         </div>
-        <task-detail-step-wrapper title="网址类型" :currentIndex="0" :totalIndex="6">
-          <div class="step-url">
-            <van-button type="primary" size="small" block>打开链接</van-button>
-          </div>
-        </task-detail-step-wrapper>
-        <task-detail-step-wrapper title="图片类型" :currentIndex="1" :totalIndex="6">
-          <task-detail-step-image></task-detail-step-image>
-        </task-detail-step-wrapper>
-        <task-detail-step-wrapper title="二维码类型" :currentIndex="2" :totalIndex="6">
-          <task-detail-step-qrcode></task-detail-step-qrcode>
-        </task-detail-step-wrapper>
-        <task-detail-step-wrapper title="复制数据类型步骤" :currentIndex="3" :totalIndex="6">
-          <task-detail-step-copy-data copy-data="我是复制数据"></task-detail-step-copy-data>
-        </task-detail-step-wrapper>
-        <task-detail-step-wrapper title="截图收集步骤类型" :currentIndex="4" :totalIndex="6">
-          <task-detail-step-collect-image></task-detail-step-collect-image>
-        </task-detail-step-wrapper>
-        <task-detail-step-wrapper title="信息收集步骤类型" :currentIndex="5" :totalIndex="6">
-          <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
-        </task-detail-step-wrapper>
       </task-detail-content-cell>
     </div>
     <div class="tool-bar-wrapper">
@@ -150,6 +145,7 @@ export default {
           this.api.axiosVal().spread((val1, val2) => {
             console.log("=============")
             let val = JSON.stringify(val1.data.taskStep)
+            console.log(val)
             val1.data.taskStepObj = Util.jsonClearEscapeCharacter(val1.data.taskStep)
             _this.taskDetail = val1.data;
             _this.taskOrder = val2.data;
@@ -164,9 +160,18 @@ export default {
         val.stepType = val["step-type"]
         val.txtDescribe = val["txt-describe"]
         val.txtUrl = val["txt-url"]
+        if (val["files"] != undefined) {
+          val.imgs = val["files"].split(',')
+        }
+        if (val['txt-data'] != undefined) {
+          val.textData = val['txt-data']
+        }
+
         console.log(val["step-type"])
         console.log(val["txt-describe"])
         console.log(val["txt-url"])
+        console.log(val.imgs)
+
       })
     },
 

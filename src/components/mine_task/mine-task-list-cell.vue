@@ -17,14 +17,14 @@
             审核时间: {{auditTime}}内审核
           </div>
           <div class="check-status-wrapper">
-            审核状态
+            {{taskOrderStateText}}
           </div>
         </div>
       </div>
       <div class="handle-bar">
-        <div class="bar-state" v-if="taskOrder.state == 5" @click.stop="onCancelTap">取消报名</div>
+        <div class="bar-state" v-if="taskOrder.state == 1" @click.stop="onCancelTap">取消报名</div>
         <div class="bar-state" v-if="taskOrder.state == 4" @click.stop="onAlterTap">修改</div>
-        <div class="bar-state-wrapper" v-if="taskOrder.state == 1">
+        <div class="bar-state-wrapper" v-if="taskOrder.state == 5">
           <div class="bar-state" @click.stop="onDeleteTap">删除记录</div>
           <div class="bar-line"></div>
           <div class="bar-state" @click.stop="onReApplyTap">重新报名</div>
@@ -64,6 +64,28 @@ export default {
     },
     taskReward: function(){
       return Until.moneyFenToYuan(this.taskOrder.reward)
+    },
+    taskOrderStateText: function(){
+      switch (this.taskOrder.state) {
+        case 1:
+          return "已报名"
+          break;
+        case 2:
+          return "审核中"
+          break;
+        case 3:
+          return "已完成"
+          break;
+        case 4:
+          return "已拒绝"
+          break;
+        case 5:
+          return "已失效"
+          break;
+        default:
+          return ""
+          break;
+      }
     }
   },
 

@@ -2,7 +2,7 @@
 <div class="component">
   <div class="component-wrapper">
     <div class="image-item" @click="imageItemTap">
-      <van-image :src="img"></van-image>
+      <van-image :src="imgUrl" height="200px" width="100%"></van-image>
     </div>
     <div class="desc">请保存图片,到微信使用识别二维码图片功能</div>
   </div>
@@ -23,16 +23,14 @@ export default {
     [ImagePreview.name]: ImagePreview,
   },
 
-  data() {
-    return {
-      img: img1,
-    }
+  props:{
+    imgUrl: String,
   },
 
   methods: {
     imageItemTap() {
       ImagePreview({
-        images: [this.img],
+        images: [this.imgUrl],
       });
     },
   },
@@ -46,6 +44,7 @@ export default {
 
 .image-item {
   height: 200px;
+  background: gray;
 }
 
 .desc {

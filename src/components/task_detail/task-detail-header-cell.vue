@@ -43,8 +43,7 @@ export default {
   },
   data() {
     return {
-      taskTime: "",
-      auditTime: "",
+      
     }
   },
   computed: {
@@ -56,17 +55,13 @@ export default {
     },
     taskReward: function(){
       return Until.moneyFenToYuan(this.taskDetail.reward)
+    },
+    taskTime: function(){
+      return Until.secondTodhms(this.taskDetail.taskDuration)
+    },
+    auditTime: function(){
+      return Until.secondTodhms(this.taskDetail.auditDuration)
     }
-  },
-
-  mounted() {
-    this.taskTime = Until.secondTodhms(this.taskDetail.taskDuration)
-    this.auditTime = Until.secondTodhms(this.taskDetail.auditDuration)
-  },
-
-  activated() {
-    this.taskTime = Until.secondTodhms(this.taskDetail.taskDuration)
-    this.auditTime = Until.secondTodhms(this.taskDetail.auditDuration)
   },
   
   methods: {

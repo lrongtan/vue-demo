@@ -1,7 +1,7 @@
 
 // 秒转换成 天时分秒
 export function secondTodhms(second) {
-  parseInt
+  
   let days = parseInt(second / (60 * 60 * 24))
   let hours = parseInt((second % (60 * 60 * 24)) / (60 * 60))
   let minites = parseInt((second % (60 * 60 * 24)) % (60 * 60) / 60)

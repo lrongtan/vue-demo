@@ -110,6 +110,9 @@ export default {
 
     onCellWrapperTap(cellItem) {
       console.log(cellItem);
+      if (cellItem.state == 1) {
+        
+      }
       // this.$router.push({ name: "task_detail" });
     },
 

@@ -2,7 +2,7 @@
 <div class="component">
   <div class="component-wrapper" :style="componentWrapperStyle">
     <div class="img-item" v-for="(item, index) in imgs" :key="index" @click="imageItemTap(index)">
-      <van-image :src="item"></van-image>
+      <van-image :src="item" fit="contain" width="100%" height="100%"></van-image>
       <div class="img-tag" v-if="index == 0">说明图</div>
     </div>
   </div>
@@ -15,14 +15,6 @@ import {
   ImagePreview
 } from "vant";
 
-var img1 = require("../../assets/images/icon_类型_纯关注.png");
-var img2 = require("../../assets/images/icon_类型_纯转发.png");
-var img3 = require("../../assets/images/icon_类型_电商相关.png");
-var img4 = require("../../assets/images/icon_类型_开户投资.png");
-var img5 = require("../../assets/images/icon_类型_其他.png");
-var img6 = require("../../assets/images/icon_类型_认证绑卡.png");
-var img7 = require("../../assets/images/icon_类型_下载注册.png");
-
 export default {
   components: {
     [Image.name]: Image,
@@ -31,22 +23,27 @@ export default {
   props: {
     imgs: {
       type: Array,
-      default: function () {
-        return [img1, img2, img3];
-      },
+      default(){
+        return []
+      }
     },
   },
 
   data() {
     return {
-      componentWrapperStyle: {
-        width: "285px"
+      
+    }
+  },
+
+  computed: {
+    componentWrapperStyle (){
+      return {
+        width: this.imgs.length * (150 + 10) + 10 + "px"
       }
     }
   },
 
   mounted() {
-    this.componentWrapperStyle.width = this.imgs.length * (150 + 10) + 10 + "px"
   },
   methods: {
     imageItemTap(index) {

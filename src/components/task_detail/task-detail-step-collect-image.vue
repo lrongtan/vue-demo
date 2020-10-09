@@ -2,7 +2,7 @@
 <div class="component">
   <div class="component-wrapper">
     <div class="image-item">
-      <van-image :src="img"></van-image>
+      <van-image :src="imgUrl" width="100%" height="100%" fit="contain"></van-image>
       <div class="img-tag">示例图</div>
     </div>
     <div class="upload-wrapper">
@@ -18,7 +18,6 @@ import {
   ImagePreview,
   Uploader
 } from "vant";
-var img1 = require("../../assets/images/icon_类型_纯关注.png");
 
 export default {
 
@@ -28,9 +27,12 @@ export default {
     [Uploader.name]: Uploader
   },
 
+  props: {
+    imgUrl: String
+  },
+
   data() {
     return {
-      img: img1,
       upFiles: []
     }
   },
