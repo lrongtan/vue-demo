@@ -6,7 +6,7 @@
       <div class="img-tag">示例图</div>
     </div>
     <div class="upload-wrapper">
-      <van-uploader class="van-uploader" v-model="upFiles" max-count="5" multiple :after-read="uploaderAfterRead"></van-uploader>
+      <van-uploader class="van-uploader" v-model="upFiles" max-count="5" :disabled="!isDraw" multiple :after-read="uploaderAfterRead"></van-uploader>
     </div>
   </div>
 </div>
@@ -34,6 +34,10 @@ export default {
   props: {
     imgUrl: String,
     imageFiles: Array,
+    isDraw: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
