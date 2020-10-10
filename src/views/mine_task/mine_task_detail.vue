@@ -38,7 +38,7 @@
               <task-detail-step-copy-data :copy-data="item.textData"></task-detail-step-copy-data>
             </div>
             <div class="step-url" v-if="item.stepType == 5">
-              <task-detail-step-collect-image></task-detail-step-collect-image>
+              <task-detail-step-collect-image v-model="imageFiles" :imgUrl="item.file"></task-detail-step-collect-image>
             </div>
             <div class="step-url" v-if="item.stepType == 6">
               <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
@@ -104,6 +104,9 @@ export default {
       taskId: 0,
       taskDetail: {},
       taskOrder: {},
+      imageFiles: [],
+      imageFileString: "",
+      formDataValue:[]
     };
   },
 
@@ -151,7 +154,6 @@ export default {
         })
         .then(
           this.api.axiosVal().spread((val1, val2) => {
-            console.log("=============")
             let val = val1.data
             val.taskStepObj = JSON.parse(val.taskStep)
             _this.handleTaskStepObj(val.taskStepObj);
@@ -187,16 +189,31 @@ export default {
       window.location.href = taskStep.txtUrl
     },
     onReSubmitTap() {
-      this.api.taskOrderCommit({
-        id: this.orderId,
-        finishImg: "",
-        finishInfo: "",
-      }).then(res => {
-
-      }).catch((res) => {});
+      this.uploadFiles();
     },
 
     onSubmitTap() {
+      this.uploadFiles();
+    },
+
+    uploadFiles(){
+      let _this = this;
+      console.log("图片上传")
+      console.log(this.imageFiles)
+      if (this.imageFiles.length > 0) {
+        let formData = new FormData()
+        this.imageFiles.forEach( val => {
+          formData.append("file",val.file)
+        })
+        this.api.uploadFiles(formData).then( res => {
+
+        }).catch((res) => {});
+      }else{
+        this.submitData()
+      }
+    },
+
+    submitData(){
       this.api.taskOrderCommit({
         id: this.orderId,
         finishImg: "",

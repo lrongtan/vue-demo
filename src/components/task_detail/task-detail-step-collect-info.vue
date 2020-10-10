@@ -33,6 +33,12 @@ export default {
     }
   },
 
+  watch: {
+    inputValue: function(val){
+      this.value = val
+    }
+  },
+
   methods: {
     inputValueChange(val){
       this.$emit('inputChange',val)

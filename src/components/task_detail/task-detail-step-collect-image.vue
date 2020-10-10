@@ -27,13 +27,24 @@ export default {
     [Uploader.name]: Uploader
   },
 
+  model: {
+    prop: 'imageFiles',
+    event: 'imageFilesChange'
+  },
   props: {
-    imgUrl: String
+    imgUrl: String,
+    imageFiles: Array,
   },
 
   data() {
     return {
-      upFiles: []
+      upFiles: this.imageFiles
+    }
+  },
+
+  watch: {
+    imageFiles: function(val){
+      this.upFiles = val
     }
   },
 
@@ -41,7 +52,7 @@ export default {
     uploaderAfterRead(file) {
       console.log("执行吗")
       console.log(this.upFiles)
-      
+      this.$emit('imageFilesChange',this.upFiles)
     }
   },
 
