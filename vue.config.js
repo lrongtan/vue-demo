@@ -21,6 +21,13 @@ module.exports = {
                 pathRewrite:{
                     '^/api': '/api'
                 }
+            },
+            '/upload': {
+                target: process.env.APP_HOST,         //baseUrl
+                changeOrigin: true,
+                pathRewrite:{
+                    '^/upload': '/upload'
+                }
             }
         }
     },

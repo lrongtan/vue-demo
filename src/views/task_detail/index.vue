@@ -32,13 +32,13 @@
               <task-detail-step-image :imgs="item.imgs"></task-detail-step-image>
             </div>
             <div class="step-url" v-if="item.stepType == 3">
-              <task-detail-step-qrcode :imgUrl="item.file"></task-detail-step-qrcode>
+              <task-detail-step-qrcode :imgUrl="item.imgs[0]"></task-detail-step-qrcode>
             </div>
             <div class="step-url" v-if="item.stepType == 4">
-              <task-detail-step-copy-data :copy-data="item.textData"></task-detail-step-copy-data>
+              <task-detail-step-copy-data :copy-data="item.textData" :isDraw="false"></task-detail-step-copy-data>
             </div>
             <div class="step-url" v-if="item.stepType == 5">
-              <task-detail-step-collect-image></task-detail-step-collect-image>
+              <task-detail-step-collect-image :imgUrl="item.imgs[0]"></task-detail-step-collect-image>
             </div>
             <div class="step-url" v-if="item.stepType == 6">
               <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
@@ -169,7 +169,8 @@ export default {
 
     onStep1Tap(taskStep) {
       // window.open(taskStep.txtUrl, '_blank')
-      window.location.href = taskStep.txtUrl
+      this.$toast("请先领取任务")
+      // window.location.href = taskStep.txtUrl
     },
   },
 };

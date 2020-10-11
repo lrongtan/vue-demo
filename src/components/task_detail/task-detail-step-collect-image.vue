@@ -6,7 +6,7 @@
       <div class="img-tag">示例图</div>
     </div>
     <div class="upload-wrapper">
-      <van-uploader class="van-uploader" v-model="upFiles" max-count="5" multiple :after-read="uploaderAfterRead"></van-uploader>
+      <van-uploader class="van-uploader" v-model="upFiles" max-count="5" :disabled="!isDraw" multiple :after-read="uploaderAfterRead"></van-uploader>
     </div>
   </div>
 </div>
@@ -27,13 +27,28 @@ export default {
     [Uploader.name]: Uploader
   },
 
+  model: {
+    prop: 'imageFiles',
+    event: 'imageFilesChange'
+  },
   props: {
-    imgUrl: String
+    imgUrl: String,
+    imageFiles: Array,
+    isDraw: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
     return {
-      upFiles: []
+      upFiles: this.imageFiles
+    }
+  },
+
+  watch: {
+    imageFiles: function(val){
+      this.upFiles = val
     }
   },
 
@@ -41,7 +56,7 @@ export default {
     uploaderAfterRead(file) {
       console.log("执行吗")
       console.log(this.upFiles)
-      
+      this.$emit('imageFilesChange',this.upFiles)
     }
   },
 

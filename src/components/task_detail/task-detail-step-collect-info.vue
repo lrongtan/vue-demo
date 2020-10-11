@@ -1,7 +1,7 @@
 <template>
   <div class="component">
     <div class="component-wrapper">
-      <van-field class="field-wrapper" v-model="value" :placeholder="placeholder" @input="inputValueChange"></van-field>
+      <van-field ref="inputField" class="field-wrapper" v-model="value" :placeholder="placeholder" @input="inputValueChange" @focus="onFocus"></van-field>
     </div>
   </div>
 </template>
@@ -25,6 +25,10 @@ export default {
   props:{
     placeholder: String,
     inputValue: String,
+    isDraw: {
+      type: Boolean,
+      default: false,
+    },
   },
 
   data() {
@@ -33,9 +37,21 @@ export default {
     }
   },
 
+  watch: {
+    inputValue: function(val){
+      this.value = val
+    }
+  },
+
   methods: {
     inputValueChange(val){
       this.$emit('inputChange',val)
+    },
+    onFocus(){
+      if (this.isDraw == false) {
+        this.$refs.inputField.blur()
+        this.$toast("请先领取任务")
+      }
     }
   },
 }

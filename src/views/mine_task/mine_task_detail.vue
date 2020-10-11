@@ -32,16 +32,16 @@
               <task-detail-step-image :imgs="item.imgs"></task-detail-step-image>
             </div>
             <div class="step-url" v-if="item.stepType == 3">
-              <task-detail-step-qrcode :imgUrl="item.file"></task-detail-step-qrcode>
+              <task-detail-step-qrcode :imgUrl="item.imgs[0]"></task-detail-step-qrcode>
             </div>
             <div class="step-url" v-if="item.stepType == 4">
-              <task-detail-step-copy-data :copy-data="item.textData"></task-detail-step-copy-data>
+              <task-detail-step-copy-data :copy-data="item.textData" :isDraw="true"></task-detail-step-copy-data>
             </div>
             <div class="step-url" v-if="item.stepType == 5">
-              <task-detail-step-collect-image></task-detail-step-collect-image>
+              <task-detail-step-collect-image v-model="formDataValue[index].imageFiles" :imgUrl="item.imgs[0]" :isDraw="true"></task-detail-step-collect-image>
             </div>
             <div class="step-url" v-if="item.stepType == 6">
-              <task-detail-step-collect-info v-model="inputValue" placeholder="按要求输入信息"></task-detail-step-collect-info>
+              <task-detail-step-collect-info v-model="formDataValue[index].inputValue" placeholder="按要求输入信息" :isDraw="true"></task-detail-step-collect-info>
             </div>
           </task-detail-step-wrapper>
         </div>
@@ -104,6 +104,9 @@ export default {
       taskId: 0,
       taskDetail: {},
       taskOrder: {},
+      imageFiles: [],
+      imageFileString: "",
+      formDataValue:[]
     };
   },
 
@@ -151,7 +154,6 @@ export default {
         })
         .then(
           this.api.axiosVal().spread((val1, val2) => {
-            console.log("=============")
             let val = val1.data
             val.taskStepObj = JSON.parse(val.taskStep)
             _this.handleTaskStepObj(val.taskStepObj);
@@ -163,6 +165,8 @@ export default {
     },
 
     handleTaskStepObj(taskStepObj) {
+      let _this = this
+      this.formDataValue = []
       taskStepObj.forEach(val => {
         val.stepType = val["step-type"]
         val.txtDescribe = val["txt-describe"]
@@ -178,7 +182,22 @@ export default {
         console.log(val["txt-describe"])
         console.log(val["txt-url"])
         console.log(val.imgs)
-
+        if (val.stepType == 5) {
+          _this.formDataValue.push({
+            stepType: val.stepType,
+            imageFiles: [],
+          })
+        }else if(val.stepType == 6){
+          _this.formDataValue.push({
+            stepType: val.stepType,
+            inputValue: "",
+          })
+        }else{
+          _this.formDataValue.push({
+            stepType: val.stepType,
+            inputValue: "",
+          })
+        }
       })
     },
 
@@ -187,16 +206,73 @@ export default {
       window.location.href = taskStep.txtUrl
     },
     onReSubmitTap() {
-      this.api.taskOrderCommit({
-        id: this.orderId,
-        finishImg: "",
-        finishInfo: "",
-      }).then(res => {
-
-      }).catch((res) => {});
+      this.uploadFiles();
     },
 
     onSubmitTap() {
+      this.uploadFiles();
+    },
+
+    uploadFiles(){
+      let _this = this;
+      let promiseArray = []
+      this.formDataValue.forEach(val => {
+        if (val.stepType == 5) {
+          if (val.imageFiles.length == 0) {
+            _this.$toast('请添加图片')
+            return
+          }
+          //挑出 未上传的图片
+          val.urls = []
+          val.upFiles = []
+          val.imageFiles.forEach(itemVal => {
+            if (itemVal.file != undefined) {
+              val.upFiles.push(itemVal)
+            }else{
+              val.urls.push(itemVal)
+            }
+          })
+          // 如果有未上传的图片 上传
+          if (val.upFiles.length > 0) {
+            let formData = new FormData()
+            val.upFiles.forEach( fileVal => {
+              formData.append("file",fileVal.file)
+            })
+            let promise = _this.api.uploadFiles(formData)
+            promiseArray.push(promise)
+          }
+        }else if(val.stepType == 6){
+          if (val.inputValue.length == "") {
+            _this.$toast('请输入文字信息')
+            return
+          }
+        }
+      })
+
+      if (promiseArray.length > 0) {
+        this.$toast.loading({
+          message: "正在上传图片数据..."
+        })
+        Promise.all(promiseArray).then(vals => {
+          _this.$toast("上传成功")
+          console.log(vals)
+          let promiseIndex = 0
+          for (let index = 0; index < _this.formDataValue.length; index++) {
+            let element = array[index];
+              if (element.stepType == 5 && element.upFiles.length > 0) {
+                element.urls.push(vals[promiseIndex].data)
+                promiseIndex += 1
+              }
+          }
+        }).catch( res => {
+
+        })
+      }
+      this.submitData()
+    },
+
+    submitData(){
+      console.log(this.formDataValue)
       this.api.taskOrderCommit({
         id: this.orderId,
         finishImg: "",
