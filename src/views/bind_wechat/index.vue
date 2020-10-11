@@ -1,35 +1,38 @@
 <template>
-  <div class="content">
-    <div class="navigation-bar">
-      <van-nav-bar title="绑定微信" ref="navbar" left-arrow @click-left="navigationBackTap"></van-nav-bar>
-    </div>
-    <div class="content-wrapper" :style="contentWrapperStyle">
-      <div class="content-header">
-        <div class="val1">公众号名称:</div>
-        <div class="val2">{{accountName}}</div>
-        <div class="button-wrapper">
-          <van-button class="btn-clipboard" type="primary" size="small" @click="copyDataTap">复制</van-button>
-        </div>
-      </div>
-      <div class="content-text">
-        前往微信,搜索{{accountName}}公众号,关注公众号获取二维码
-      </div>
-      <div class="field-wrapper">
-        <van-field v-model="codeInput" label="验证码" placeholder="请输入从公众号获取的验证码"></van-field>
-      </div>
-      <div class="field-wrapper">
-        <van-field v-model="usernameInput" label="真实姓名" placeholder="请输入真实姓名"></van-field>
+<div class="content">
+  <div class="navigation-bar">
+    <van-nav-bar title="绑定微信" ref="navbar" left-arrow @click-left="navigationBackTap"></van-nav-bar>
+  </div>
+  <div class="content-wrapper" :style="contentWrapperStyle">
+    <div class="content-header">
+      <div class="val1">公众号名称:</div>
+      <div class="val2">{{accountName}}</div>
+      <div class="button-wrapper">
+        <van-button class="btn-clipboard" type="primary" size="small" @click="copyDataTap">复制</van-button>
       </div>
     </div>
-    <div class="tool-bar" ref="toolbar">
-      <van-button type="primary" block>提交</van-button>
+    <div class="content-text">
+      前往微信,搜索{{accountName}}公众号,关注公众号获取二维码
+    </div>
+    <div class="field-wrapper">
+      <van-field v-model="codeInput" label="验证码" placeholder="请输入从公众号获取的验证码"></van-field>
+    </div>
+    <div class="field-wrapper">
+      <van-field v-model="usernameInput" label="真实姓名" placeholder="请输入真实姓名"></van-field>
     </div>
   </div>
+  <div class="tool-bar" ref="toolbar">
+    <van-button type="primary" block @click="onSubmitTap">提交</van-button>
+  </div>
+</div>
 </template>
 
-
 <script>
-import { NavBar, Button, Field } from "vant";
+import {
+  NavBar,
+  Button,
+  Field
+} from "vant";
 import Clipboard from "clipboard"
 
 export default {
@@ -61,14 +64,14 @@ export default {
   },
 
   methods: {
-    navigationBackTap(){
+    navigationBackTap() {
       this.$router.back()
     },
 
-    copyDataTap(){
+    copyDataTap() {
       let _this = this
-      var clipboard = new Clipboard('.btn-clipboard',{
-        text: function (){
+      var clipboard = new Clipboard('.btn-clipboard', {
+        text: function () {
           return _this.accountName
         }
       })
@@ -80,13 +83,31 @@ export default {
         console.log("================失败")
         _this.$toast("复制失败")
       })
+    },
+    onSubmitTap() {
+      if (this.codeInput.length <= 0) {
+        this.$toast("请输入验证码")
+        return
+      }
+      this.$toast.loading({
+        message: "正在操作...",
+      })
+      let _this = this
+      this.api.bindWechat({
+        code: this.codeInput
+      }).then(res => {
+        _this.$toast("绑定成功")
+        _this.$router.back()
+      }).catch(res => {
+
+      })
     }
   },
+
 }
 </script>
 
 <style lang="scss" scoped>
-
 .content {
   width: 100%;
   height: 100%;
@@ -108,36 +129,39 @@ export default {
   @include scroll;
 }
 
-.content-header{
+.content-header {
   @include flex_v_center;
   height: 50px;
   background: white;
   font-size: 15px;
   margin: 0px 10px;
   padding: 0px 15px;
-  .val1{
+
+  .val1 {
     color: black;
   }
-  .val2{
+
+  .val2 {
     color: $theme-color;
     margin-left: 10px;
   }
-  .button-wrapper{
+
+  .button-wrapper {
     margin-left: 15px;
   }
 }
 
-.content-text{
+.content-text {
   font-size: 15px;
   margin: 15px;
   padding: 15px 0px;
 }
 
-.field-wrapper{
+.field-wrapper {
   margin: 10px;
 }
 
-.tool-bar{
+.tool-bar {
   z-index: 1000;
   position: fixed;
   left: 0px;
@@ -145,6 +169,4 @@ export default {
   bottom: 0px;
   padding: 10px;
 }
-
-
 </style>

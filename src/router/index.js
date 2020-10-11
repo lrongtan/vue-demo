@@ -35,7 +35,7 @@ const routes = [
     name: 'login',
     component: () => import('@views/login/login.vue'),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
     }
   },
   {
@@ -67,7 +67,7 @@ const routes = [
     name: 'mine_service',
     component: () => import('@views/mine_service/index.vue'),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
     }
   },
   {
@@ -75,7 +75,7 @@ const routes = [
     name: 'balance_payment',
     component: () => import('@views/balance_payment/index.vue'),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
     }
   },
   {
@@ -83,7 +83,7 @@ const routes = [
     name: 'bind_alipay',
     component: () => import('@views/bind_alipay/index.vue'),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
     }
   },
   {
@@ -91,7 +91,7 @@ const routes = [
     name: 'bind_wechat',
     component: () => import('@views/bind_wechat/index.vue'),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
     }
   },
   {
@@ -99,7 +99,7 @@ const routes = [
     name: 'withdrawal',
     component: () => import('@views/withdrawal/index.vue'),
     meta: {
-      keepAlive: true,
+      keepAlive: false,
     }
   }
 ]

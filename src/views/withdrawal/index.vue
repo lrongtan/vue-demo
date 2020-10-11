@@ -6,21 +6,21 @@
   <div class="content-wrapper" :style="contentWrapperStyle">
 
     <div class="withdrawal-amount-wrapper">
-      <withdrawal-amount :total="withdrawalObject.total" :blance="withdrawalObject.blance"></withdrawal-amount>
+      <withdrawal-amount :total="revenue" :blance="balance"></withdrawal-amount>
     </div>
 
     <div class="payment-wrapper">
       <div class="payment-title">提现方式</div>
       <div class="check-box-wrapper">
         <van-radio-group v-model="withdrawalType" direction="horizontal">
-          <van-radio name="1">支付宝</van-radio>
-          <van-radio name="2">微信</van-radio>
+          <van-radio name="2" :disabled="!isAlipay">支付宝</van-radio>
+          <van-radio name="1" :disabled="!isWechat">微信</van-radio>
         </van-radio-group>
       </div>
     </div>
 
     <div class="input-wrapper">
-      <withdrawal-input v-model="inputValue" :blanceValue="withdrawalObject.blance"></withdrawal-input>
+      <withdrawal-input v-model="inputValue" :blanceValue="balance"></withdrawal-input>
     </div>
 
     <div class="tool-bar" ref="toolbar">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import * as Util from '../../utils/index.js'
 import {
   NavBar,
   Button,
@@ -41,6 +42,9 @@ import {
 
 import WithdrawalAmount from '@/components/withdrawal/withdrawal-amount'
 import WithdrawalInput from '@/components/withdrawal/withdrawal-input'
+import {
+  thistle
+} from 'color-name';
 
 export default {
   components: {
@@ -59,12 +63,34 @@ export default {
         marginTop: "0px",
         marginBottom: "0px",
       },
-      withdrawalType: "1",
+      withdrawalType: "0",
       inputValue: "",
       withdrawalObject: {
-        total: 1000,
-        blance: 100,
+        revenue: 0,
+        balance: 0,
+      },
+    }
+  },
+
+  computed: {
+    revenue() {
+      return Util.moneyFenToYuan(this.withdrawalObject.revenue)
+    },
+    balance() {
+      return Util.moneyFenToYuan(this.withdrawalObject.balance)
+    },
+
+    isAlipay() {
+      if (this.withdrawalObject.alipay == null) {
+        return false
       }
+      return true
+    },
+    isWechat() {
+      if (this.withdrawalObject.wxpay == null) {
+        return false
+      }
+      return true
     }
   },
 
@@ -73,6 +99,7 @@ export default {
     let toolHeight = this.$refs.toolbar.offsetHeight
     this.contentWrapperStyle.marginTop = navHeight + "px";
     this.contentWrapperStyle.marginBottom = toolHeight + "px";
+    this.onGetUserInfo()
   },
 
   methods: {
@@ -80,9 +107,41 @@ export default {
       this.$router.back()
     },
 
-    withdrawalTap(){
-      this.inputValue = "9089"
+    withdrawalTap() {
+      if (this.withdrawalType == "0") {
+        this.$toast("请选择提现方式")
+        return
+      }
+      // if (this.inputValue.length <= 0) {
+      //   this.$toast("请输入提现金额")
+      //   return
+      // }
+
+      let val = parseFloat(this.inputValue)
+
+      if (val == undefined || val == null || Number.isNaN(val)) {
+        this.$toast("请输入正确格式的金额")
+        return
+      }
+
+      this.api.withdrawarRecordAdd({
+        amount: val * 100,
+        poundage: val * 100 * 0.01,
+        type: this.withdrawalType
+      }).then(res => {
+
+      }).catch(res => {
+
+      })
     },
+    onGetUserInfo() {
+      let _this = this
+      this.api.userInfo().then(res => {
+        _this.withdrawalObject = res.data
+      }).catch(res => {
+
+      })
+    }
   },
 }
 </script>
@@ -124,7 +183,7 @@ export default {
   margin-top: 20px;
 }
 
-.tool-bar{
+.tool-bar {
   z-index: 1000;
   position: fixed;
   left: 0px;

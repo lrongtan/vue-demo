@@ -1,26 +1,31 @@
-
 <template>
-  <div class="content">
-    <div class="navigation-bar">
-      <van-nav-bar title="绑定支付宝" ref="navbar" left-arrow @click-left="navigationBackTap"></van-nav-bar>
+<div class="content">
+  <div class="navigation-bar">
+    <van-nav-bar title="绑定支付宝" ref="navbar" left-arrow @click-left="navigationBackTap"></van-nav-bar>
+  </div>
+  <div class="content-wrapper" :style="contentWrapperStyle">
+    <div class="field-wrapper">
+      <van-field v-model="accountInput" label="支付宝账号" placeholder="请输入支付宝账号"></van-field>
     </div>
-    <div class="content-wrapper" :style="contentWrapperStyle">
-      <div class="field-wrapper">
-        <van-field v-model="accountInput" label="支付宝账号" placeholder="请输入支付宝账号"></van-field>
-      </div>
-      <div class="field-wrapper">
-        <van-field v-model="usernameInput" label="真实姓名" placeholder="请输入真实姓名"></van-field>
-      </div>
-    </div>
-    <div class="tool-bar" ref="toolbar">
-      <van-button type="primary" block>提交</van-button>
+    <div class="field-wrapper">
+      <van-field v-model="usernameInput" label="真实姓名" placeholder="请输入真实姓名"></van-field>
     </div>
   </div>
+  <div class="tool-bar" ref="toolbar">
+    <van-button type="primary" block @click="onSubmitTap">提交</van-button>
+  </div>
+</div>
 </template>
 
-
 <script>
-import { NavBar, Button, Field } from "vant";
+import {
+  NavBar,
+  Button,
+  Field
+} from "vant";
+import {
+  thistle
+} from 'color-name';
 
 export default {
 
@@ -50,15 +55,38 @@ export default {
   },
 
   methods: {
-    navigationBackTap(){
+    navigationBackTap() {
       this.$router.back()
+    },
+    onSubmitTap() {
+      if (this.accountInput.length <= 0) {
+        this.$toast("请输入支付宝账号")
+        return
+      }
+
+      if (this.usernameInput.length <= 0) {
+        this.$toast("请输入姓名")
+        return
+      }
+      this.$toast.loading({
+        message: "正在操作...",
+      })
+      let _this = this
+      this.api.bindAlipay({
+        alipayAccount: this.accountInput,
+        alipayRealname: this.usernameInput
+      }).then(res => {
+        _this.$toast("绑定成功")
+        _this.$router.back()
+      }).catch(res => {
+
+      })
     },
   },
 }
 </script>
 
 <style lang="scss" scoped>
-
 .content {
   width: 100%;
   height: 100%;
@@ -80,11 +108,11 @@ export default {
   @include scroll;
 }
 
-.field-wrapper{
+.field-wrapper {
   margin: 10px;
 }
 
-.tool-bar{
+.tool-bar {
   z-index: 1000;
   position: fixed;
   left: 0px;
@@ -92,6 +120,4 @@ export default {
   bottom: 0px;
   padding: 10px;
 }
-
-
 </style>

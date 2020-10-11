@@ -124,12 +124,44 @@ export const axiosVal = () => {
   return axios
 }
 
+//获取用户信息
+export const userInfo = (params) => {
+  return axios.get('/api/user/info')
+}
+
+//收支明细分页列表 /api/user/incomeRecord/getPageList
+
+export const incomeRecordPageList = (params) => {
+  let urlPath = "/api/user/incomeRecord/getPageList?keyword=" + 
+  (params.keyword != null ? params.keyword : "") + 
+  "&pageIndex=" + (params.pageIndex != null ? params.pageIndex : 1) + 
+  "&pageSize=" + (params.pageSize != null ? params.pageSize : 10) + 
+  "&state=" + (params.state != null ? params.state : 1);
+  console.log(urlPath)
+  return axios.get(urlPath)
+}
+
+//绑定支付宝
+
+export const bindAlipay = (params) => {
+  let urlPath = "/api/user/binding/alipay?alipayAccount=" + 
+  (params.alipayAccount != null ? params.alipayAccount : "") +
+  "&alipayRealname=" + (params.alipayRealname != null ? params.alipayRealname : "")
+  return axios.post(urlPath)
+}
+
+//绑定微信
+
+export const bindWechat = (params) => {
+  let urlPath = "/api/user/binding/wechat?code=" + (params.code != null ? params.code : "")
+  return axios.post(urlPath)
+}
 
 // 提现
 // /api/withdrawarRecord/add
 // 添加提现记录表
 export const  withdrawarRecordAdd = (params) => {
-  let urlPath = "/api/withdrawarRecord/add/" + params.id;
+  let urlPath = "/api/withdrawarRecord/add/";
   return axios.post(urlPath,params)
 }
 

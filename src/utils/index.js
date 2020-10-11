@@ -107,3 +107,9 @@ export function jsonClearEscapeCharacter( val ){
   var json = JSON.parse(text);
   return json
 }
+
+
+// 获取地址栏参数
+export function getUrlKey( val ){
+  return decodeURIComponent((new RegExp('[?|&]' + val + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+}

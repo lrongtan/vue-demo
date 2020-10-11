@@ -9,23 +9,23 @@
         <van-image src="" width="60" height="60" round></van-image>
       </div>
       <div class="nickname">
-        游客101
+        {{userInfo.name}}
       </div>
     </div>
 
     <div class="section-wrapper">
       <div class="cell-wrapper">
-        <van-cell icon="cash-on-deliver" value="提现" is-link :to="{name: 'withdrawal'}"/>
-        <van-cell icon="records" value="收支明细" is-link :to="{name: 'balance_payment'}"/>
-        <van-cell icon="location-o" value="绑定支付宝" is-link :to="{name: 'bind_alipay'}"/>
-        <van-cell icon="location-o" value="绑定微信" is-link :to="{name: 'bind_wechat'}"/>
+        <van-cell icon="cash-on-deliver" value="提现" is-link :to="{name: 'withdrawal'}" />
+        <van-cell icon="records" value="收支明细" is-link :to="{name: 'balance_payment'}" />
+        <van-cell icon="location-o" value="绑定支付宝" is-link :to="{name: 'bind_alipay'}" />
+        <van-cell icon="location-o" value="绑定微信" is-link :to="{name: 'bind_wechat'}" />
       </div>
     </div>
 
     <div class="section-wrapper">
       <div class="cell-wrapper">
-        <van-cell icon="location-o" value="我的任务" is-link :to="{name: 'mine_task'}"/>
-        <van-cell icon="service-o" value="我的客服" is-link :to="{name: 'mine_service'}"/>
+        <van-cell icon="location-o" value="我的任务" is-link :to="{name: 'mine_task'}" />
+        <van-cell icon="service-o" value="我的客服" is-link :to="{name: 'mine_service'}" />
       </div>
     </div>
   </div>
@@ -52,6 +52,9 @@ export default {
       contentWrapperStyle: {
         marginTop: '0px',
         marginBottom: '0px',
+      },
+      userInfo: {
+
       }
     }
   },
@@ -59,14 +62,26 @@ export default {
   mounted() {
     let navHeight = this.$refs.navbar.$el.offsetHeight
     this.contentWrapperStyle.marginTop = navHeight + 'px'
+    this.onGetUserInfo()
+  },
+  activated() {
+    this.onGetUserInfo()
   },
 
   methods: {
-
-
-    onMineTaskTap(){
-      this.$router.push({name: 'mine_task'})
+    onMineTaskTap() {
+      this.$router.push({
+        name: 'mine_task'
+      })
     },
+    onGetUserInfo() {
+      let _this = this
+      this.api.userInfo().then(res => {
+        _this.userInfo = res.data
+      }).catch(res => {
+
+      })
+    }
   },
 
 }
@@ -80,7 +95,7 @@ export default {
   flex-direction: column;
 }
 
-.navigation-bar{
+.navigation-bar {
   z-index: 1000;
   position: fixed;
   left: 0px;
