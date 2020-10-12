@@ -52,7 +52,7 @@ export default {
 
       codeInput: "",
       usernameInput: "",
-      accountName: "xxxxx公众号",
+      accountName: "聚盟售货机",
     }
   },
 
