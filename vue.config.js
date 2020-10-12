@@ -7,7 +7,7 @@ module.exports = {
     publicPath: "./",
     outputDir: process.env.outputDir,
     assetsDir: 'static',
-    indexPath: 'mobile.html',
+    indexPath: 'index.html',
     devServer: {
         open: true,
         port: 8081,
