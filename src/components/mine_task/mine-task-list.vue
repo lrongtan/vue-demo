@@ -163,7 +163,18 @@ export default {
         .catch((res) => {});
     },
     onAlterTap(cellItem) {
-      this.onCellWrapperTap(cellItem)
+      let idObj = {
+        orderId: cellItem.id,
+        taskId: cellItem.taskId,
+      }
+      let jsonText = JSON.stringify(idObj)
+      console.log(jsonText)
+      this.$router.push({
+        name: "mine_task_detail",
+        params: {
+          idObj: jsonText
+        },
+      });
     },
   },
 };

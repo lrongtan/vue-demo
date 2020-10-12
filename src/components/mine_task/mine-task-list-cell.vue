@@ -1,43 +1,44 @@
-
 <template>
-  <div class="component">
-    <div class="component-wrapper">
-      <div class="content-wrapper">
-        <div class="img-left">
-          <van-image :src="iconImageType"></van-image>
-        </div>
-        <div class="content-right">
-          <div class="title-wrapper">
-            <div class="title">{{taskOrder.taskTitle}}</div>
-            <div class="money">
-              佣￥<span>{{taskReward}}</span>
-            </div>
-          </div>
-          <div class="check-time-wrapper">
-            审核时间: {{auditTime}}内审核
-          </div>
-          <div class="check-status-wrapper">
-            {{taskOrderStateText}}
-          </div>
-        </div>
+<div class="component">
+  <div class="component-wrapper">
+    <div class="content-wrapper">
+      <div class="img-left">
+        <van-image :src="iconImageType"></van-image>
       </div>
-      <div class="handle-bar">
-        <div class="bar-state" v-if="taskOrder.state == 1" @click.stop="onCancelTap">取消报名</div>
-        <div class="bar-state" v-if="taskOrder.state == 4" @click.stop="onAlterTap">修改</div>
-        <div class="bar-state-wrapper" v-if="taskOrder.state == 5">
-          <div class="bar-state" @click.stop="onDeleteTap">删除记录</div>
-          <div class="bar-line"></div>
-          <div class="bar-state" @click.stop="onReApplyTap">重新报名</div>
+      <div class="content-right">
+        <div class="title-wrapper">
+          <div class="title">{{taskOrder.taskTitle}}</div>
+          <div class="money">
+            佣￥<span>{{taskReward}}</span>
+          </div>
+        </div>
+        <div class="check-time-wrapper">
+          审核时间: {{auditTime}}内审核
+        </div>
+        <div class="check-status-wrapper">
+          {{taskOrderStateText}}
         </div>
       </div>
     </div>
+    <div class="handle-bar">
+      <div class="bar-state" v-if="taskOrder.state == 1" @click.stop="onCancelTap">取消报名</div>
+      <div class="bar-state" v-if="taskOrder.state == 4" @click.stop="onAlterTap">修改</div>
+      <div class="bar-state-wrapper" v-if="taskOrder.state == 6">
+        <div class="bar-state" @click.stop="onDeleteTap">删除记录</div>
+        <div class="bar-line"></div>
+        <div class="bar-state" @click.stop="onReApplyTap">重新报名</div>
+      </div>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
 import * as Until from '../../utils/index';
 
-import { Image } from "vant";
+import {
+  Image
+} from "vant";
 
 export default {
   components: {
@@ -59,13 +60,13 @@ export default {
     iconImageType: function () {
       return Until.taskTypeToImage(this.taskOrder.taskType)
     },
-    taskType: function(){
+    taskType: function () {
       return Until.taskTypeToText(this.taskOrder.taskType)
     },
-    taskReward: function(){
+    taskReward: function () {
       return Until.moneyFenToYuan(this.taskOrder.reward)
     },
-    taskOrderStateText: function(){
+    taskOrderStateText: function () {
       switch (this.taskOrder.state) {
         case 1:
           return "已报名"
@@ -94,34 +95,32 @@ export default {
     // this.auditTime = Until.secondTodhms(this.taskOrder.auditDuration)
   },
 
-
   methods: {
-    onCancelTap(){
-      this.$emit('onCancelTap') 
+    onCancelTap() {
+      this.$emit('onCancelTap')
     },
 
-    onDeleteTap(){
-      this.$emit('onDeleteTap') 
+    onDeleteTap() {
+      this.$emit('onDeleteTap')
     },
 
-    onReApplyTap(){
+    onReApplyTap() {
       this.$emit('onReApplyTap')
     },
-    onAlterTap(){
+    onAlterTap() {
       this.$emit('onAlterTap')
     },
   },
 };
 </script>
 
-
 <style lang="scss" scoped>
-
-.component-wrapper{
+.component-wrapper {
   @include flex_column;
 
 }
-.content-wrapper{
+
+.content-wrapper {
   @include flex_v_center;
   padding: 10px 0px;
 
@@ -161,23 +160,23 @@ export default {
   }
 }
 
-.check-time-wrapper{
+.check-time-wrapper {
   height: 25px;
   font-size: 13px;
   color: #777;
 }
 
-.check-status-wrapper{
+.check-status-wrapper {
   height: 25px;
   font-size: 13px;
   color: red;
 }
 
-.handle-bar{
+.handle-bar {
   background: $background-color;
 }
 
-.bar-state{
+.bar-state {
   background: white;
   margin-top: 1px;
   color: $theme-color;
@@ -187,14 +186,13 @@ export default {
   flex: 1;
 }
 
-.bar-state-wrapper{
+.bar-state-wrapper {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  .bar-line{
+
+  .bar-line {
     width: 1px;
   }
 }
-
-
 </style>

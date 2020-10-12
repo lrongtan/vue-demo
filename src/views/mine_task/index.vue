@@ -6,7 +6,7 @@
   <div class="content-wrapper" :style="contentWrapperStyle">
     <van-tabs v-model="active" color="#ffb100" :sticky="true" :offset-top="contentWrapperStyle.marginTop" title-active-color="#ffb100">
       <van-tab title="未提交">
-        <mine-task-list :task-type="1"></mine-task-list>
+        <mine-task-list :task-type="7"></mine-task-list>
       </van-tab>
       <van-tab title="审核中">
         <mine-task-list :task-type="2"></mine-task-list>
