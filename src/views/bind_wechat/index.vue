@@ -17,9 +17,9 @@
     <div class="field-wrapper">
       <van-field v-model="codeInput" label="验证码" placeholder="请输入从公众号获取的验证码"></van-field>
     </div>
-    <div class="field-wrapper">
+    <!-- <div class="field-wrapper">
       <van-field v-model="usernameInput" label="真实姓名" placeholder="请输入真实姓名"></van-field>
-    </div>
+    </div> -->
   </div>
   <div class="tool-bar" ref="toolbar">
     <van-button type="primary" block @click="onSubmitTap">提交</van-button>

@@ -162,7 +162,9 @@ export default {
         })
         .catch((res) => {});
     },
-    onAlterTap(cellItem) {},
+    onAlterTap(cellItem) {
+      this.onCellWrapperTap(cellItem)
+    },
   },
 };
 </script>

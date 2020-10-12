@@ -17,14 +17,14 @@
       <div class="cell-wrapper">
         <van-cell icon="cash-on-deliver" value="提现" is-link :to="{name: 'withdrawal'}" />
         <van-cell icon="records" value="收支明细" is-link :to="{name: 'balance_payment'}" />
-        <van-cell icon="location-o" value="绑定支付宝" is-link :to="{name: 'bind_alipay'}" />
-        <van-cell icon="location-o" value="绑定微信" is-link :to="{name: 'bind_wechat'}" />
+        <van-cell icon="debit-pay" value="绑定支付宝" is-link :to="{name: 'bind_alipay'}" />
+        <van-cell icon="other-pay" value="绑定微信" is-link :to="{name: 'bind_wechat'}" />
       </div>
     </div>
 
     <div class="section-wrapper">
       <div class="cell-wrapper">
-        <van-cell icon="location-o" value="我的任务" is-link :to="{name: 'mine_task'}" />
+        <van-cell icon="tosend" value="我的任务" is-link :to="{name: 'mine_task'}" />
         <van-cell icon="service-o" value="我的客服" is-link :to="{name: 'mine_service'}" />
       </div>
     </div>
