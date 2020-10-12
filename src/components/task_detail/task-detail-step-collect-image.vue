@@ -1,7 +1,7 @@
 <template>
 <div class="component">
   <div class="component-wrapper">
-    <div class="image-item">
+    <div class="image-item" @click="onDemoTap">
       <van-image :src="imgUrl" width="100%" height="100%" fit="contain"></van-image>
       <div class="img-tag">示例图</div>
     </div>
@@ -57,6 +57,12 @@ export default {
       console.log("执行吗")
       console.log(this.upFiles)
       this.$emit('imageFilesChange',this.upFiles)
+    },
+    onDemoTap(){
+      ImagePreview({
+        images: [this.imgUrl],
+        startPosition: 0,
+      });
     }
   },
 

@@ -98,11 +98,7 @@ export const taskOrderPageList = (params) => {
   "&pageSize=" + (params.pageSize != null ? params.pageSize : 10) + 
   "&state=" + (params.state != null ? params.state : 1);
   console.log(urlPath)
-  return axios.get(urlPath, {
-    params:{
-      accountId: params.accountId
-    }
-  })
+  return axios.get(urlPath)
 }
 
 // 任务订单详情
