@@ -20,7 +20,6 @@ export const login = (params) => {
     appId: appId
   }
   let val = Object.assign(appVal,params);
-  console.log(val)
   return axios.post('/api/login', val)
 } 
 
@@ -38,7 +37,6 @@ export const sendCode = (params) => {
 // pageSize
 export const taskPageList = (params) => {
   let urlPath = "/api/task/getPageList?keyword=" + (params.keyword != null ? params.keyword : "") + "&pageIndex=" + (params.pageIndex != null ? params.pageIndex : 1) + "&pageSize=" + (params.pageSize != null ? params.pageSize : 10);
-  console.log(urlPath)
   return axios.get(urlPath)
 }
 
@@ -66,8 +64,9 @@ export const taskOrderCancel = (params) => {
 //任务提交
 // id
 export const taskOrderCommit = (params) => {
-  let urlPath = "/api/task/order/commit/" + params.id;
-  return axios.post(urlPath, params)
+  let urlPath = "/api/task/order/commit/" + params.id + "?finishInfo=" + params.finishInfo;
+
+  return axios.post(encodeURI(urlPath))
 }
 
 //删除任务订单
@@ -97,7 +96,6 @@ export const taskOrderPageList = (params) => {
   "&pageIndex=" + (params.pageIndex != null ? params.pageIndex : 1) + 
   "&pageSize=" + (params.pageSize != null ? params.pageSize : 10) + 
   "&state=" + (params.state != null ? params.state : 1);
-  console.log(urlPath)
   return axios.get(urlPath)
 }
 
@@ -133,7 +131,6 @@ export const incomeRecordPageList = (params) => {
   "&pageIndex=" + (params.pageIndex != null ? params.pageIndex : 1) + 
   "&pageSize=" + (params.pageSize != null ? params.pageSize : 10) + 
   "&state=" + (params.state != null ? params.state : 1);
-  console.log(urlPath)
   return axios.get(urlPath)
 }
 

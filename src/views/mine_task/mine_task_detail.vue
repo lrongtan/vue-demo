@@ -47,10 +47,10 @@
         </div>
       </task-detail-content-cell>
     </div>
-    <div class="tool-bar-wrapper">
+  </div>
+  <div class="tool-bar-wrapper">
       <task-detail-tool-bar ref="toolbar" :tool-type="taskOrder.state" @onDrawTap="onDrawTap" @onSubmitTap="onSubmitTap" @onReSubmitTap="onReSubmitTap"></task-detail-tool-bar>
     </div>
-  </div>
 </div>
 </template>
 
@@ -199,22 +199,29 @@ export default {
           });
         }
       });
-
-      if (this.taskOrder.finishInfo.length > 0) {
-        let forms = JSON.parse(this.taskOrder.finishInfo);
+      let finishInfo = decodeURI(this.taskOrder.finishInfo)
+      if (finishInfo.length > 0) {
+        console.log(finishInfo)
+        let forms = JSON.parse(finishInfo);
+        console.log(forms)
 
         for (let index = 0; index < forms.length; index++) {
           let element = forms[index];
-          let formVal = this.formDataValue[index];
+          let formVal = _this.formDataValue[index];
+          
           if (element.stepType == 5) {
-            let uploadItems = element.imageFiles.map((item) => {
+            console.log(element)
+            console.log(formVal)
+            let uploadItems = element.imageFiles.map(item => {
               return {
                 url: item,
-                status: "done"
+                status: "done",
+                message: ""
               }
             })
+            console.log(uploadItems)
             formVal.imageFiles = uploadItems;
-          } else if (val.stepType == 6) {
+          } else if (element.stepType == 6) {
             formVal.inputValue = element.inputValue;
           }
         }
@@ -236,10 +243,13 @@ export default {
     uploadFiles() {
       let _this = this;
       let promiseArray = [];
+      console.log(this.formDataValue)
+      let isNextStep = true
       this.formDataValue.forEach((val) => {
         if (val.stepType == 5) {
           if (val.imageFiles.length == 0) {
             _this.$toast("请添加图片");
+            isNextStep = false
             return;
           }
           //挑出 未上传的图片
@@ -264,11 +274,14 @@ export default {
         } else if (val.stepType == 6) {
           if (val.inputValue.length == "") {
             _this.$toast("请输入文字信息");
+            isNextStep = false
             return;
           }
         }
       });
-
+      if (isNextStep == false) {
+        return
+      }
       if (promiseArray.length > 0) {
         this.$toast.loading({
           message: "正在上传图片数据...",
@@ -281,11 +294,12 @@ export default {
             for (let index = 0; index < _this.formDataValue.length; index++) {
               let element = _this.formDataValue[index];
               if (element.stepType == 5 && element.upFiles.length > 0) {
-                element.urls.push(vals[promiseIndex].data);
+                vals[promiseIndex].data.forEach(urlItem => {
+                  element.urls.push(urlItem);
+                })
                 promiseIndex += 1;
               }
             }
-            console.log("是否执行到这一步")
             _this.submitData();
           })
           .catch((res) => {});
@@ -304,7 +318,7 @@ export default {
             stepType: val.stepType,
             imageFiles: val.urls
           })
-        } else if (val.stepType == 5) {
+        } else if (val.stepType == 6) {
           formDatas.push({
             stepType: val.stepType,
             inputValue: val.inputValue
@@ -317,6 +331,7 @@ export default {
         }
       })
       let formText = JSON.stringify(formDatas)
+      console.log(formText)
       this.api
         .taskOrderCommit({
           id: this.orderId,

@@ -48,9 +48,6 @@ export default {
   mounted() {
     let val = this.$refs.tabbar.$el.offsetHeight; //获取组件高度
     this.tabbarStyle.height = val + "px";
-    console.log("tabbar的高度");
-    console.log(val);
-    console.log(this.userToken);
     if (this.userToken.token == null) {
       this.$router.replace({
         name: 'login'
@@ -66,6 +63,6 @@ export default {
 <style lang="scss" scoped>
 .content {
   width: 100%;
-  height: 100%;
+  // height: 100%;
 }
 </style>

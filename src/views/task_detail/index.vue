@@ -80,14 +80,15 @@
           </div>
         </task-detail-content-cell>
       </div>
-      <div class="tool-bar-wrapper">
+      
+    </div>
+    <div class="tool-bar-wrapper">
         <task-detail-tool-bar
           ref="toolbar"
           :tool-type="0"
           @onDrawTap="onDrawTap"
         ></task-detail-tool-bar>
       </div>
-    </div>
   </div>
 </template>
 

@@ -7,11 +7,7 @@ export function secondTodhms(second) {
   let minites = parseInt((second % (60 * 60 * 24)) % (60 * 60) / 60)
   let seconds = second % 60
   var result = ""
-  // console.log(second)
-  // console.log(days)
-  // console.log(hours)
-  // console.log(minites)
-  // console.log(seconds)
+
   if (days > 0) {
     result = result + days + "天"
   }
@@ -100,10 +96,8 @@ export function moneyFenToYuan(fen){
 
 export function jsonClearEscapeCharacter( val ){
   var converter = document.createElement("DIV");
-  console.log(converter)
   converter.innerHTML = val;
   var text = converter.innerText;
-  console.log(text)
   var json = JSON.parse(text);
   return json
 }

@@ -48,7 +48,6 @@ export default {
         },
       });
       clipboard.on("success", (e) => {
-        console.log("================成功");
         if (this.isDraw === false) {
           _this.$toast("请先领取任务");
           return;
@@ -57,7 +56,6 @@ export default {
         }
       });
       clipboard.on("error", (e) => {
-        console.log("================失败");
         _this.$toast("复制失败");
       });
     },

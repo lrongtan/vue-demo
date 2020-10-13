@@ -22,11 +22,10 @@
     <div class="input-wrapper">
       <withdrawal-input v-model="inputValue" :blanceValue="balance"></withdrawal-input>
     </div>
-
-    <div class="tool-bar" ref="toolbar">
+  </div>
+  <div class="tool-bar" ref="toolbar">
       <van-button type="primary" block @click="withdrawalTap">提现</van-button>
     </div>
-  </div>
 </div>
 </template>
 

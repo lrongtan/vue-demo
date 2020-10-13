@@ -76,11 +76,9 @@ export default {
         }
       })
       clipboard.on('success', e => {
-        console.log("================成功")
         _this.$toast("复制成功")
       })
       clipboard.on('error', e => {
-        console.log("================失败")
         _this.$toast("复制失败")
       })
     },

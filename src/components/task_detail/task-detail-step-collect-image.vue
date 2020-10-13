@@ -54,8 +54,6 @@ export default {
 
   methods: {
     uploaderAfterRead(file) {
-      console.log("执行吗")
-      console.log(this.upFiles)
       this.$emit('imageFilesChange',this.upFiles)
     },
     onDemoTap(){

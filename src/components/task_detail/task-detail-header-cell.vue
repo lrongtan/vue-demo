@@ -1,77 +1,74 @@
 
 <template>
-<div class="component">
-  <div class="component-wrapper">
-    <div class="img-left">
-      <van-image :src="iconImageType"></van-image>
-    </div>
-    <div class="content-right">
-      <div class="title-wrapper">
-        <div class="title">{{taskDetail.taskTitle}}</div>
-        <div class="money">佣￥<span>{{taskReward}}</span></div>
+  <div class="component">
+    <div class="component-wrapper">
+      <div class="img-left">
+        <van-image :src="iconImageType"></van-image>
       </div>
-      <div class="tag-wrapper">
-        <div class="tag">{{taskType}}</div>
-        <div class="tag tag-margin-left">{{taskDetail.channel}}</div>
-        <div class="submit-time">{{taskTime}}内提交</div>
-      </div>
-      <div class="amount-wrapper">
-        <div class="task-id">悬赏ID: {{taskDetail.id}}</div>
-        <div class="remaining"><span>{{taskDetail.surplusCount}}</span>/{{taskDetail.taskCount}}</div>
-        <div class="check-time">{{auditTime}}内审核</div>
+      <div class="content-right">
+        <div class="title-wrapper">
+          <div class="title">{{ taskDetail.taskTitle }}</div>
+          <div class="money">
+            佣￥<span>{{ taskReward }}</span>
+          </div>
+        </div>
+        <div class="tag-wrapper">
+          <div class="tag">{{ taskType }}</div>
+          <div class="tag tag-margin-left">{{ taskDetail.channel }}</div>
+        </div>
+        <div class="amount-wrapper">
+          <div class="task-id">悬赏ID: {{ taskDetail.id }}</div>
+          <div class="remaining">
+            <span>{{ taskDetail.surplusCount }}</span
+            >/{{ taskDetail.taskCount }}
+          </div>
+        </div>
+        <div class="submit-time">{{ taskTime }}内提交</div>
+        <div class="check-time">{{ auditTime }}内审核</div>
       </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
+import * as Until from "../../utils/index";
 
-import * as Until from '../../utils/index'
-
-import {
-  Image
-} from "vant"
+import { Image } from "vant";
 
 export default {
   components: {
-    [Image.name]: Image
+    [Image.name]: Image,
   },
 
   props: {
-    taskDetail: Object
+    taskDetail: Object,
   },
   data() {
-    return {
-      
-    }
+    return {};
   },
   computed: {
     iconImageType: function () {
-      return Until.taskTypeToImage(this.taskDetail.taskType)
+      return Until.taskTypeToImage(this.taskDetail.taskType);
     },
-    taskType: function(){
-      return Until.taskTypeToText(this.taskDetail.taskType)
+    taskType: function () {
+      return Until.taskTypeToText(this.taskDetail.taskType);
     },
-    taskReward: function(){
-      return Until.moneyFenToYuan(this.taskDetail.reward)
+    taskReward: function () {
+      return Until.moneyFenToYuan(this.taskDetail.reward);
     },
-    taskTime: function(){
-      return Until.secondTodhms(this.taskDetail.taskDuration)
+    taskTime: function () {
+      return Until.secondTodhms(this.taskDetail.taskDuration);
     },
-    auditTime: function(){
-      return Until.secondTodhms(this.taskDetail.auditDuration)
-    }
+    auditTime: function () {
+      return Until.secondTodhms(this.taskDetail.auditDuration);
+    },
   },
-  
-  methods: {
-    
-  },
-}
+
+  methods: {},
+};
 </script>
 
 <style lang="scss" scoped>
-
 .component-wrapper {
   @include flex_v_center;
   padding: 10px;
@@ -127,20 +124,13 @@ export default {
   .tag-margin-left {
     margin-left: 10px;
   }
-
-  .submit-time{
-    flex: 1;
-    text-align: right;
-    font-size: 13px;
-    color: #888;
-  }
 }
 
 .amount-wrapper {
   @include flex_v_center;
   height: 25px;
 
-  .task-id{
+  .task-id {
     font-size: 13px;
     color: #888;
   }
@@ -153,10 +143,16 @@ export default {
       color: red;
     }
   }
-  .check-time{
-    font-size: 13px;
-    color: #888;
-  }
 }
 
+.submit-time {
+  font-size: 13px;
+  color: #888;
+  margin-top: 15px;
+}
+.check-time {
+  font-size: 13px;
+  color: #888;
+  margin-top: 15px;
+}
 </style>

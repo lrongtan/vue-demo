@@ -95,14 +95,12 @@ export default {
     },
 
     onCellWrapperTap(cellItem) {
-      console.log(cellItem);
       if (cellItem.state == 1) {
         let idObj = {
           orderId: cellItem.id,
           taskId: cellItem.taskId,
         }
         let jsonText = JSON.stringify(idObj)
-        console.log(jsonText)
         this.$router.push({
           name: "mine_task_detail",
           params: {
@@ -168,7 +166,6 @@ export default {
         taskId: cellItem.taskId,
       }
       let jsonText = JSON.stringify(idObj)
-      console.log(jsonText)
       this.$router.push({
         name: "mine_task_detail",
         params: {
