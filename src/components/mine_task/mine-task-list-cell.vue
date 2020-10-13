@@ -18,6 +18,7 @@
         <div class="check-status-wrapper">
           {{taskOrderStateText}}
         </div>
+        <div class="reject-reason-wrapper" v-if="taskOrder.state == 4">原因:{{taskOrder.rejectReason}}</div>
       </div>
     </div>
     <div class="handle-bar">
@@ -81,6 +82,9 @@ export default {
           return "已拒绝"
           break;
         case 5:
+          return "已取消"
+          break;
+        case 6:
           return "已失效"
           break;
         default:
@@ -170,6 +174,11 @@ export default {
   height: 25px;
   font-size: 13px;
   color: red;
+}
+
+.reject-reason-wrapper{
+  height: 25px;
+  font-size: 13px;
 }
 
 .handle-bar {

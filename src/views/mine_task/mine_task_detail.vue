@@ -199,6 +199,9 @@ export default {
           });
         }
       });
+      if (this.taskOrder.finishInfo == null) {
+        this.taskOrder.finishInfo = ""
+      }
       let finishInfo = decodeURI(this.taskOrder.finishInfo)
       if (finishInfo.length > 0) {
         console.log(finishInfo)
