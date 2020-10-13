@@ -185,16 +185,19 @@ export default {
         if (val.stepType == 5) {
           _this.formDataValue.push({
             stepType: val.stepType,
+            txtDescribe: val.txtDescribe,
             imageFiles: [],
           });
         } else if (val.stepType == 6) {
           _this.formDataValue.push({
             stepType: val.stepType,
+            txtDescribe: val.txtDescribe,
             inputValue: "",
           });
         } else {
           _this.formDataValue.push({
             stepType: val.stepType,
+            txtDescribe: val.txtDescribe,
             inputValue: "",
           });
         }
@@ -319,16 +322,19 @@ export default {
         if (val.stepType == 5) {
           formDatas.push({
             stepType: val.stepType,
+            txtDescribe: val.txtDescribe,
             imageFiles: val.urls
           })
         } else if (val.stepType == 6) {
           formDatas.push({
             stepType: val.stepType,
+            txtDescribe: val.txtDescribe,
             inputValue: val.inputValue
           })
         } else {
           formDatas.push({
             stepType: val.stepType,
+            txtDescribe: val.txtDescribe,
             inputValue: ""
           })
         }
