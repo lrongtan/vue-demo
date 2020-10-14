@@ -177,11 +177,6 @@ export default {
         if (val["txt-data"] != undefined) {
           val.textData = val["txt-data"];
         }
-
-        console.log(val["step-type"]);
-        console.log(val["txt-describe"]);
-        console.log(val["txt-url"]);
-        console.log(val.imgs);
         if (val.stepType == 5) {
           _this.formDataValue.push({
             stepType: val.stepType,
@@ -207,17 +202,14 @@ export default {
       }
       let finishInfo = decodeURI(this.taskOrder.finishInfo)
       if (finishInfo.length > 0) {
-        console.log(finishInfo)
         let forms = JSON.parse(finishInfo);
-        console.log(forms)
 
         for (let index = 0; index < forms.length; index++) {
           let element = forms[index];
           let formVal = _this.formDataValue[index];
           
           if (element.stepType == 5) {
-            console.log(element)
-            console.log(formVal)
+            
             let uploadItems = element.imageFiles.map(item => {
               return {
                 url: item,
@@ -225,7 +217,6 @@ export default {
                 message: ""
               }
             })
-            console.log(uploadItems)
             formVal.imageFiles = uploadItems;
           } else if (element.stepType == 6) {
             formVal.inputValue = element.inputValue;
@@ -249,7 +240,6 @@ export default {
     uploadFiles() {
       let _this = this;
       let promiseArray = [];
-      console.log(this.formDataValue)
       let isNextStep = true
       this.formDataValue.forEach((val) => {
         if (val.stepType == 5) {
@@ -341,6 +331,9 @@ export default {
       })
       let formText = JSON.stringify(formDatas)
       console.log(formText)
+      this.$toast.loading({
+        message: "正在提交数据..."
+      })
       this.api
         .taskOrderCommit({
           id: this.orderId,
@@ -348,6 +341,7 @@ export default {
           finishInfo: formText,
         })
         .then((res) => {
+          _this.$toast("成功")
           _this.$router.back()
         })
         .catch((res) => {});

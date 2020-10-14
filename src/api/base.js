@@ -43,7 +43,11 @@ export default (Vue) => {
         return data
     }, function (error){
         console.log("响应失败");
-        Toast(error.response.data.message);
+        if (error.response.data.message == undefined || error.response.data.message == null || error.response.data.message == "") {
+            Toast("连接不上服务器了");
+        }else{
+            Toast(error.response.data.message);
+        }
         return Promise.reject(error.response)
     })
 

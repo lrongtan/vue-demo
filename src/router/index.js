@@ -4,17 +4,9 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 const routes = [
+  
   {
     path: '/',
-    name: 'd',
-    component: () => import('@views/index/index.vue'),
-    redirect: '/index/home',
-    meta: {
-      keepAlive: true,
-    }
-  },
-  {
-    path: '/index',
     name: 'index',
     component: () => import('@views/index/index.vue'),
     redirect: '/index/home',
