@@ -209,14 +209,12 @@ export default {
           let formVal = _this.formDataValue[index];
           
           if (element.stepType == 5) {
-            
-            let uploadItems = element.imageFiles.map(item => {
-              return {
-                url: item,
+
+            let uploadItems = [{
+                url: element.inputValue,
                 status: "done",
                 message: ""
-              }
-            })
+            }]
             formVal.imageFiles = uploadItems;
           } else if (element.stepType == 6) {
             formVal.inputValue = element.inputValue;
@@ -313,7 +311,7 @@ export default {
           formDatas.push({
             stepType: val.stepType,
             txtDescribe: val.txtDescribe,
-            imageFiles: val.urls
+            inputValue: val.urls[0],
           })
         } else if (val.stepType == 6) {
           formDatas.push({
