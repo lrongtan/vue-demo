@@ -70,6 +70,7 @@ export default {
 
   .title {
     flex: 1;
+    font-size: 15px;
   }
 
   .money {

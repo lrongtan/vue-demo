@@ -6,9 +6,10 @@
   <div class="content-wrapper" :style="contentWrapperStyle">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list v-model="loading" :finished="finished" finished-text="没有更多数据了" @load="onLoad">
-        <div class="cell-wrapper" v-for="item in m_list" :key="item" @click="onCellWrapperTap(item)">
-          <balance-payment-cell :recordItem="item"></balance-payment-cell>
-        </div>
+      <div class="cell-wrapper" v-for="(item, index) in m_list" :key="index" @click="onCellWrapperTap(item)">
+        <balance-payment-cell :recordItem="item"></balance-payment-cell>
+      </div>
+    
       </van-list>
     </van-pull-refresh>
   </div>
