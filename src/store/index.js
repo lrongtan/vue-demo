@@ -8,10 +8,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userToken: localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')):{},
-    agentId: "1",
+    agentId: "115",
     appId: "1000001",
-    appSecret: "",
-    userId:"",
+    appSecret: "40f49e46e55442da93dec691fe290dde",
+    userId:"13416918869",
     channel: "",
   },
   mutations: {

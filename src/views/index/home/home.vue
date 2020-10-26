@@ -90,7 +90,7 @@ export default {
         this.loading = false
         this.refreshing = false
         this.finished = true
-        this.onThirdPartLogin()
+        // this.onThirdPartLogin()
         return
       }
       this.m_page.pageIndex = this.m_page.pageIndex + 1;

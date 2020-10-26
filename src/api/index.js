@@ -33,7 +33,7 @@ export const thirdPartyLogin = (params) => {
   let userId = store.getters.userId;
   let nowDate = new Date()
   let timestamp = nowDate.getTime()
-  let sign_O = agentId + appId + appSecret + timestamp + channel
+  let sign_O = agentId + appId + appSecret + timestamp + userId
   
   let sign = md5(sign_O)
   console.log("MD5加密" + sign_O)
@@ -44,7 +44,6 @@ export const thirdPartyLogin = (params) => {
     appSecret:appSecret,
     timestamp:timestamp,
     userId:userId,
-    channel:channel,
     sign:sign,
   }
   let val = Object.assign(appVal,params);
