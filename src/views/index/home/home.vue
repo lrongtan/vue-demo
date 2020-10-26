@@ -69,12 +69,12 @@ export default {
 
   methods: {
     onRefresh() {
-      if (!this.userToken.token) {
-        this.loading = false
-        this.refreshing = false
-        this.finished = true
-        return
-      }
+      // if (!this.userToken.token) {
+      //   this.loading = false
+      //   this.refreshing = false
+      //   this.finished = true
+      //   return
+      // }
       // 清空列表数据
       this.finished = false;
       // 重新加载数据
@@ -85,12 +85,12 @@ export default {
     },
     
     onLoad() {
-      if (!this.userToken.token) {
-        this.loading = false
-        this.refreshing = false
-        this.finished = true
-        return
-      }
+      // if (!this.userToken.token) {
+      //   this.loading = false
+      //   this.refreshing = false
+      //   this.finished = true
+      //   return
+      // }
       this.m_page.pageIndex = this.m_page.pageIndex + 1;
       this.onTaskList()
     },

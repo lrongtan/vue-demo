@@ -48,12 +48,12 @@ export default {
   mounted() {
     let val = this.$refs.tabbar.$el.offsetHeight; //获取组件高度
     this.tabbarStyle.height = val + "px";
-    if (this.userToken.token == null) {
-      this.$router.replace({
-        name: 'login'
-      })
+    // if (this.userToken.token == null) {
+    //   this.$router.replace({
+    //     name: 'login'
+    //   })
 
-    }
+    // }
   },
 
   methods: {}

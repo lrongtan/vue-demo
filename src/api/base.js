@@ -2,6 +2,7 @@
 import axios from  "axios"
 import { Toast } from "vant"
 import store from "../store"
+import router from "../router"
 
 export default (Vue) => {
     Object.defineProperties(Vue.prototype, {
@@ -23,7 +24,7 @@ export default (Vue) => {
         var reg = RegExp(/\/api\/((v1\/*\d{11}\/verifyCode)|login)/);
         if (!reg.test(config.url)) {
             let userToken = store.getters.userToken;
-            config.headers.Authorization = userToken.token;
+            config.headers.Authorization = userToken.token ?? "";
             console.log(userToken.token)
         }
         return config
@@ -43,11 +44,22 @@ export default (Vue) => {
         return data
     }, function (error){
         console.log("响应失败");
+        console.log(error.response.data)
+        
         if (error.response.data.message == undefined || error.response.data.message == null || error.response.data.message == "") {
             Toast("连接不上服务器了");
         }else{
-            Toast(error.response.data.message);
+            Toast(error.response.data.message.code);
         }
+        router.replace({
+            name: 'login'
+        })
+        // if (error.response.data.code == 401 || error.response.data.code == 403) {
+        //     console.log("运行到了")
+        //     router.replace({
+        //         name: 'login'
+        //     })
+        // }
         return Promise.reject(error.response)
     })
 
