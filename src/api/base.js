@@ -21,7 +21,7 @@ export default (Vue) => {
         console.log("请求拦截");
         console.log(config);
         // 发送验证码 和 登录 不需要  Authorization
-        var reg = RegExp(/\/api\/((v1\/*\d{11}\/verifyCode)|login)/);
+        var reg = RegExp(/\/api\/((v1\/*\d{11}\/verifyCode)|login|login\/third-party)/);
         if (!reg.test(config.url)) {
             let userToken = store.getters.userToken;
             config.headers.Authorization = userToken.token ?? "";
@@ -48,8 +48,10 @@ export default (Vue) => {
         
         if (error.response.data.message == undefined || error.response.data.message == null || error.response.data.message == "") {
             Toast("连接不上服务器了");
+        }else if (error.response.message == undefined || error.response.message == null || error.response.message == "") {
+            
         }else{
-            Toast(error.response.data.message.code);
+            Toast(error.response.message.code);
         }
         router.replace({
             name: 'login'

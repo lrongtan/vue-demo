@@ -10,6 +10,9 @@ export default new Vuex.Store({
     userToken: localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')):{},
     agentId: "1",
     appId: "1000001",
+    appSecret: "",
+    userId:"",
+    channel: "",
   },
   mutations: {
     SET_USER_TOKEN(state, info){
@@ -21,6 +24,15 @@ export default new Vuex.Store({
     },
     SET_APP_ID(state, info){
       state.appId = info
+    },
+    SET_APP_SECRET(state, info){
+      state.appSecret = info
+    },
+    SET_USER_ID(state, info){
+      state.appId = info
+    },
+    SET_CHANNEL(state, info){
+      state.channel = info
     }
   },
   actions: {
@@ -33,11 +45,23 @@ export default new Vuex.Store({
     setAppId({ commit }, info){
       commit('SET_APP_ID', info)
     },
+    setAppSecret({ commit }, info){
+      commit('SET_APP_SECRET', info)
+    },
+    setUserId({ commit }, info){
+      commit('SET_USER_ID', info)
+    },
+    setChannel({ commit }, info){
+      commit('SET_CHANNEL', info)
+    },
   },
 
   getters:{
     userToken: state => state.userToken,
     agentId: state => state.agentId,
     appId: state => state.appId,
+    appSecret: state => state.appSecret,
+    userId: state => state.userId,
+    channel: state => state.channel,
   },
 })

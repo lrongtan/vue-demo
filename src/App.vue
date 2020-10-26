@@ -15,15 +15,29 @@ export default {
 
   mounted() {
     let agentId = Util.getUrlKey("agentId")
-    console.log(agentId)
-    console.log("截取路径参数")
+    
     let appId = Util.getUrlKey("appId")
-    console.log(appId)
+
+    let appSecret = Util.getUrlKey("appSecret")
+
+    let userId = Util.getUrlKey("userId")
+
+    let channel = Util.getUrlKey("channel")
+
     if (agentId != null) {
       this.$store.dispatch('setAgentId', agentId);
     }
     if (appId != null) {
       this.$store.dispatch('setAppId', appId);
+    }
+    if (appSecret != null) {
+      this.$store.dispatch('setAppSecret', appSecret);
+    }
+    if (userId != null) {
+      this.$store.dispatch('setUserId', userId);
+    }
+    if (channel != null) {
+      this.$store.dispatch('setChannel', channel);
     }
   },
 }

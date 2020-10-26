@@ -69,12 +69,13 @@ export default {
 
   methods: {
     onRefresh() {
-      // if (!this.userToken.token) {
-      //   this.loading = false
-      //   this.refreshing = false
-      //   this.finished = true
-      //   return
-      // }
+      if (!this.userToken.token) {
+        this.loading = false
+        this.refreshing = false
+        this.finished = true
+        this.onThirdPartLogin()
+        return
+      }
       // 清空列表数据
       this.finished = false;
       // 重新加载数据
@@ -85,12 +86,13 @@ export default {
     },
     
     onLoad() {
-      // if (!this.userToken.token) {
-      //   this.loading = false
-      //   this.refreshing = false
-      //   this.finished = true
-      //   return
-      // }
+      if (!this.userToken.token) {
+        this.loading = false
+        this.refreshing = false
+        this.finished = true
+        this.onThirdPartLogin()
+        return
+      }
       this.m_page.pageIndex = this.m_page.pageIndex + 1;
       this.onTaskList()
     },
@@ -118,6 +120,22 @@ export default {
       })
     },
     
+    onThirdPartLogin(){
+      let _this = this
+      this.api.thirdPartyLogin({}).then(res => {
+        _this.loginSuccess(res.data)
+      }).catch(res => {
+
+      })
+    },
+
+    loginSuccess(token) {
+      this.$store.dispatch('setUserToken', token);
+      if (!this.refreshing) {
+        this.refreshing = true
+        this.onRefresh()
+      }
+    },
     onCellWrapperTap(cellItem){
       console.log(cellItem)
       let jsonText = JSON.stringify(cellItem)

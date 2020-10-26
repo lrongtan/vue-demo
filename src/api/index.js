@@ -3,6 +3,8 @@ import axios from 'axios'
 
 import store from '../store'
 
+import md5 from "md5"
+
 
 //登录
 // {
@@ -22,6 +24,32 @@ export const login = (params) => {
   let val = Object.assign(appVal,params);
   return axios.post('/api/login', val)
 } 
+
+export const thirdPartyLogin = (params) => {
+  let agentId = store.getters.agentId;
+  let appId = store.getters.appId;
+  let appSecret = store.getters.appSecret;
+  let channel = store.getters.channel;
+  let userId = store.getters.userId;
+  let nowDate = new Date()
+  let timestamp = nowDate.getTime()
+  let sign_O = agentId + appId + appSecret + timestamp + channel
+  
+  let sign = md5(sign_O)
+  console.log("MD5加密" + sign_O)
+  console.log(sign)
+  var appVal = {
+    agentId: agentId,
+    appId: appId,
+    appSecret:appSecret,
+    timestamp:timestamp,
+    userId:userId,
+    channel:channel,
+    sign:sign,
+  }
+  let val = Object.assign(appVal,params);
+  return axios.post('api/login/third-party', val)
+}
 
 
 //验证码
