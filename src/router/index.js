@@ -31,6 +31,14 @@ const routes = [
     }
   },
   {
+    path: '/bind_phone',
+    name: 'bind_phone',
+    component: () => import('@views/login/bind_phone.vue'),
+    meta: {
+      keepAlive: false,
+    }
+  },
+  {
     path: '/task_detail',
     name: 'task_detail',
     component: () => import('@views/task_detail/index.vue'),

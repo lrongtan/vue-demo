@@ -39,6 +39,9 @@ export default (Vue) => {
         console.log(respond.data);
         if (data.code != 200 || data.code != "200") {
             Toast(respond.data.message);
+            if (data.code == 5112) {
+                router.push({name:"bind_phone"})
+            }
             return Promise.reject(respond)
         }
         return data
@@ -49,7 +52,7 @@ export default (Vue) => {
         if (error.response.data.message == undefined || error.response.data.message == null || error.response.data.message == "") {
             Toast("连接不上服务器了");
         }else if (error.response.message == undefined || error.response.message == null || error.response.message == "") {
-            
+            Toast("连接不上服务器了");
         }else{
             Toast(error.response.message.code);
         }

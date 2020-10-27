@@ -25,6 +25,7 @@ export const login = (params) => {
   return axios.post('/api/login', val)
 } 
 
+//三方登录 
 export const thirdPartyLogin = (params) => {
   let agentId = store.getters.agentId;
   let appId = store.getters.appId;
@@ -51,6 +52,18 @@ export const thirdPartyLogin = (params) => {
   return axios.post('api/login/third-party', val)
 }
 
+//绑定手机号
+export const bindPhone = (params) => {
+  let agentId = store.getters.agentId;
+  let appId = store.getters.appId;
+
+  var appVal = {
+    agentId: agentId,
+    appId: appId
+  }
+  let val = Object.assign(appVal,params);
+  return axios.post('/api/phone/binding', params)
+}
 
 //验证码
 // mobile
