@@ -29,7 +29,7 @@ export default new Vuex.Store({
       state.appSecret = info
     },
     SET_USER_ID(state, info){
-      state.appId = info
+      state.userId = info
     },
     SET_CHANNEL(state, info){
       state.channel = info
