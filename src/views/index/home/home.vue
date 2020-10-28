@@ -58,6 +58,7 @@ export default {
     this.contentWrapperStyle.marginTop = navHeight + 'px'
     this.refreshing = true
     this.onRefresh()
+    this.onThirdPartLogin()
   },
 
   activated() {
@@ -73,7 +74,6 @@ export default {
         this.loading = false
         this.refreshing = false
         this.finished = true
-        this.onThirdPartLogin()
         return
       }
       // 清空列表数据
@@ -121,6 +121,9 @@ export default {
     },
     
     onThirdPartLogin(){
+      if (this.$store.getters.userId == "") {
+        return
+      }
       let _this = this
       this.api.thirdPartyLogin({}).then(res => {
         _this.loginSuccess(res.data)

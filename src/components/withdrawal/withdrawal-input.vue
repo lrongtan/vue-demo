@@ -9,9 +9,9 @@
         </template>
       </van-field>
     </div>
-    <div class="input-tips">最多可提现{{cpuBlanceValue - (cpuBlanceValue * poundageVal)}}元</div>
-    <div class="input-poundage">手续费1%</div>
-    <div class="input-poundage-value">手续费{{cpuBlanceValue * poundageVal}}元 到账{{cpuBlanceValue * (1-poundageVal)}}元</div>
+    <div class="input-tips">最多可提现{{cpuBlanceValue}}元</div>
+    <div class="input-poundage">手续费{{poundageVal*100}}%</div>
+    <div class="input-poundage-value">手续费{{serviceChargeValue}}元 到账{{actualAmountValue}}元</div>
     <div class="input-poundage-tips">提示:提现实际到账金额需要扣除手续费部分</div>
   </div>
 </div>
@@ -54,7 +54,22 @@ export default {
         return this.blanceValue
       }
       return this.blanceValue
+    },
+    serviceChargeValue: function(){
+      if (this.fieldInput == "") {
+        return 0
+      }
+      let val = parseFloat(this.fieldInput) * this.poundageVal
+      return val.toFixed(2)
+    },
+    actualAmountValue: function(){
+      if (this.fieldInput == "") {
+        return 0
+      }
+      let val = parseFloat(this.fieldInput) * (1 - this.poundageVal)
+      return val.toFixed(2)
     }
+
   },
 
   watch: {
@@ -65,7 +80,7 @@ export default {
 
   data() {
     return {
-      poundageVal: 0.01,
+      poundageVal: 0.006,
       fieldInput: this.inputValue,
     }
   },

@@ -48,8 +48,9 @@ export default {
   mounted() {
     let val = this.$refs.tabbar.$el.offsetHeight; //获取组件高度
     this.tabbarStyle.height = val + "px";
-
-    if (this.userToken.token == null && this.$store.getters.userId == "") {
+    console.log("这输出了啥")
+    console.log(this.userToken.token)
+    if ((this.userToken.token == null || this.userToken.token == undefined) && this.$store.getters.userId == "") {
       this.$router.replace({
         name: 'login'
       })

@@ -61,7 +61,7 @@ export const bindPhone = (params) => {
     appId: appId
   }
   let val = Object.assign(appVal,params);
-  return axios.post('/api/phone/binding', params)
+  return axios.post('/api/phone/binding', val)
 }
 
 //验证码

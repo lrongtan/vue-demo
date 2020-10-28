@@ -111,10 +111,6 @@ export default {
         this.$toast("请选择提现方式")
         return
       }
-      // if (this.inputValue.length <= 0) {
-      //   this.$toast("请输入提现金额")
-      //   return
-      // }
 
       let val = parseFloat(this.inputValue)
 
@@ -122,13 +118,17 @@ export default {
         this.$toast("请输入正确格式的金额")
         return
       }
-
+      let _this = this
+      this.$toast.loading({
+        message:"正在提交申请..."
+      })
       this.api.withdrawarRecordAdd({
         amount: val * 100,
-        poundage: val * 100 * 0.01,
         type: this.withdrawalType
       }).then(res => {
-
+        _this.$toast("提交成功")
+        _this.inputValue = ""
+        _this.onGetUserInfo()
       }).catch(res => {
 
       })
