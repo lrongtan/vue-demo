@@ -35,6 +35,8 @@ export default {
     }
     if (userId != null) {
       this.$store.dispatch('setUserId', userId);
+    }else{
+      this.$store.dispatch('setUserToken', {});
     }
     if (channel != null) {
       this.$store.dispatch('setChannel', channel);

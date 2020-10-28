@@ -141,10 +141,26 @@ export default {
     this.contentWrapperStyle.marginBottom = toolHeight + "px";
     let taskItem = this.$route.params.taskItem;
     let task = JSON.parse(taskItem);
+    console.log("====000====")
+    console.log(taskItem)
     task.taskStepObj = Util.jsonClearEscapeCharacter(task.taskStep);
     this.taskDetail = task;
     this.handleTaskStepObj(task.taskStepObj);
     this.onTaskDetailAll();
+  },
+
+  activated(){
+    let taskItem = this.$route.params.taskItem;
+    if (taskItem != undefined){
+      let task = JSON.parse(taskItem);
+      console.log("====activated====")
+      console.log(taskItem)
+      task.taskStepObj = Util.jsonClearEscapeCharacter(task.taskStep);
+      this.taskDetail = task;
+      this.handleTaskStepObj(task.taskStepObj);
+      this.onTaskDetailAll();
+    }
+    
   },
 
   methods: {

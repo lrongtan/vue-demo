@@ -43,7 +43,7 @@ const routes = [
     name: 'task_detail',
     component: () => import('@views/task_detail/index.vue'),
     meta: {
-      keepAlive: false,
+      keepAlive: true,
     }
   },
   {

@@ -17,8 +17,8 @@
       <div class="cell-wrapper">
         <van-cell icon="cash-on-deliver" value="提现" is-link :to="{name: 'withdrawal'}" />
         <van-cell icon="records" value="收支明细" is-link :to="{name: 'balance_payment'}" />
-        <van-cell icon="debit-pay" value="绑定支付宝" is-link :to="{name: 'bind_alipay'}" />
-        <van-cell icon="other-pay" value="绑定微信" is-link :to="{name: 'bind_wechat'}" />
+        <van-cell icon="debit-pay" value="绑定支付宝" is-link @click="onAplipayTap"/>
+        <van-cell icon="other-pay" value="绑定微信" is-link @click="onWechatTap"/>
       </div>
     </div>
 
@@ -38,6 +38,7 @@ import {
   Cell,
   Image
 } from "vant"
+import { thistle } from 'color-name';
 
 export default {
 
@@ -80,6 +81,24 @@ export default {
         _this.userInfo = res.data
       }).catch(res => {
 
+      })
+    },
+    onAplipayTap(){
+      if (this.userInfo.alipay != null){
+        this.$toast("已绑定支付宝")
+        return
+      }
+      this.$router.push({
+        name: "bind_alipay"
+      })
+    },
+    onWechatTap(){
+      if (this.userInfo.wxpay != null){
+        this.$toast("已绑定微信")
+        return
+      }
+      this.$router.push({
+        name: "bind_wechat"
       })
     }
   },

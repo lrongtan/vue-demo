@@ -1,7 +1,8 @@
 <template>
 <div class="content">
   <div class="navigation-bar">
-    <van-nav-bar title="绑定手机号"></van-nav-bar>
+    <van-nav-bar title="绑定手机号" left-arrow
+        @click-left="navigationBackTap"></van-nav-bar>
   </div>
   <div class="top-padding"></div>
   <!-- 账号输入框 -->
@@ -53,8 +54,11 @@ export default {
   },
 
   methods: {
+    navigationBackTap() {
+      this.$router.back();
+    },
     loginTap() {
-      this.$toast('点击了登录按钮')
+      // this.$toast('点击了登录按钮')
       let result = Regular.phoneNumber(this.accountInput);
       if (!result) {
         this.$toast('请输入正确的手机号');

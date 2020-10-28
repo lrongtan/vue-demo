@@ -54,7 +54,7 @@ export default {
 
   methods: {
     loginTap() {
-      this.$toast('点击了登录按钮')
+      // this.$toast('点击了登录按钮')
       let result = Regular.phoneNumber(this.accountInput);
       if (!result) {
         this.$toast('请输入正确的手机号');

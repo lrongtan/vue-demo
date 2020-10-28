@@ -52,12 +52,17 @@ export default {
 
   data() {
     return {
-      taskTime: "",
-      auditTime: "",
+      
     }
   },
 
   computed: {
+    taskTime: function(){
+      return Until.secondTodhms(this.taskOrder.taskDuration)
+    },
+    auditTime: function(){
+      return Until.secondTodhms(this.taskOrder.auditDuration)
+    },
     iconImageType: function () {
       return Until.taskTypeToImage(this.taskOrder.taskType)
     },
