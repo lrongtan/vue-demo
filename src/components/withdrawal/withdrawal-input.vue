@@ -10,7 +10,7 @@
       </van-field>
     </div>
     <div class="input-tips">最多可提现{{cpuBlanceValue}}元</div>
-    <div class="input-poundage">手续费{{poundageVal*100}}%</div>
+    <div class="input-poundage">如果提现金额小于100元,固定手续费0.6元,如果大于100元,手续费按{{poundageVal*100}}%计算,</div>
     <div class="input-poundage-value">手续费{{serviceChargeValue}}元 到账{{actualAmountValue}}元</div>
     <div class="input-poundage-tips">提示:提现实际到账金额需要扣除手续费部分</div>
   </div>
@@ -59,14 +59,20 @@ export default {
       if (this.fieldInput == "") {
         return 0
       }
-      let val = parseFloat(this.fieldInput) * this.poundageVal
-      return val.toFixed(2)
+      let val = parseFloat(this.fieldInput)
+      if (val < 100) {
+        return (100 * this.poundageVal).toFixed(2)
+      }
+      return (val * this.poundageVal).toFixed(2)
     },
     actualAmountValue: function(){
       if (this.fieldInput == "") {
         return 0
       }
-      let val = parseFloat(this.fieldInput) * (1 - this.poundageVal)
+      let val = parseFloat(this.fieldInput) - this.serviceChargeValue
+      if (val < 0) {
+        return 0
+      }
       return val.toFixed(2)
     }
 
