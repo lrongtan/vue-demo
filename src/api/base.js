@@ -20,6 +20,7 @@ export default (Vue) => {
     axios.interceptors.request.use(function (config){
         console.log("请求拦截");
         console.log(config);
+        console.log(process.env.APP_BASE_URL)
         // 发送验证码 和 登录 不需要  Authorization
         var reg = RegExp(/\/api\/((v1\/*\d{11}\/verifyCode)|login|login\/third-party)/);
         if (!reg.test(config.url)) {
